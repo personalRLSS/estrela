@@ -46,31 +46,72 @@ export function createFourBasicWallRoom(location,
    location.add(room);
 }
 
-export function createWallBasic(location, sizeX, sizeY, sizeZ, 
-                                moveX, moveY, moveZ, material)
+// Omitindo a parede com o menor Y para "encaixar" nos comodos de 4 paredes criados anteriormente
+export function createThreeBasicWallRoom(location, 
+   sizex, sizey, sizez, 
+   posx, posy, posz, 
+   material)
 {
-   let geometry = new THREE.BoxGeometry(sizeX, sizeY, sizeZ).toNonIndexed();
-   geometry.translate(moveX+sizeX/2.0, moveY+sizeY/2.0, moveZ+sizeZ/2.0); 
-   let wall = new THREE.Mesh(geometry, material);
-   wall.castShadow = true;
-   location.add(wall);
+   let room = new THREE.Object3D();
+   // fundo
+   createWallBasic(room, sizex, 0.12, sizez, posx, posy+sizey, posz, material); // fundo
+   // frente
+   createWallBasic(room, sizex, 0.12, sizez, posx, posy, posz, material); // fundo
+   // esquerda
+   createWallBasic(room, 0.12, sizey, sizez, posx, posy, posz, material); // fundo
+   // direita
+   createWallBasic(room, 0.12, sizey, sizez, posx+sizex, posy, posz, material); // fundo 
+
+   location.add(room);
 }
 
 export function createWall(location,
-                           sizeX, sizeY, sizeZ, 
-                           moveX, moveY, moveZ,
-                           matx, matxneg = null,
-                           maty = null, matyneg = null,
-                           matz = null, matzneg = null)
+   sizeX, sizeY, sizeZ, 
+   moveX, moveY, moveZ,
+   matx, matxneg = null,
+   maty = null, matyneg = null,
+   matz = null, matzneg = null)
 {
    let geometry = new THREE.BoxGeometry(sizeX, sizeY, sizeZ).toNonIndexed();
    geometry.translate(moveX+sizeX/2.0, moveY+sizeY/2.0, moveZ+sizeZ/2.0); // To avoid conflict with the axeshelper
    let cubeMaterials = organizeMaterials(matx, matxneg, maty, matyneg, matz, matzneg);
    let wall = new THREE.Mesh(geometry, cubeMaterials);
-      wall.castShadow = true;
-      //wall.receiveShadow = true;
-   
+   wall.castShadow = true;
+   //wall.receiveShadow = true;
+
    location.add(wall);
 }
 
+
+export function createWallBasic(location, sizeX, sizeY, sizeZ, 
+                                moveX, moveY, moveZ, material)
+{
+   let geometry = new THREE.BoxGeometry(sizeX, sizeY, sizeZ).toNonIndexed();
+      geometry.translate(moveX+sizeX/2.0, moveY+sizeY/2.0, moveZ+sizeZ/2.0); 
+   let wall = new THREE.Mesh(geometry, setMaterial(material));
+      wall.castShadow = true;
+      //wall.receiveShadow = true;   
+   location.add(wall);
+}
+
+// Também conhecido como lage. :)
+export function createFloor(location,
+   sizeX, sizeY, sizeZ, 
+   moveX, moveY, moveZ,
+   matSides, matTop, repTopU, repTopV, matBot, repBotU, repBotV)
+{
+   let geometry = new THREE.BoxGeometry(sizeX, sizeY, sizeZ).toNonIndexed();
+      geometry.translate(moveX+sizeX/2.0, moveY+sizeY/2.0, moveZ+sizeZ/2.0); // To avoid conflict with the axeshelper
+   let cubeMaterials = [setMaterial(matSides),
+                        setMaterial(matSides),
+                        setMaterial(matSides),
+                        setMaterial(matSides),
+                        setMaterial(null, matTop, repTopU, repTopV),
+                        setMaterial(null, matBot, repBotU, repBotV),]
+   let floor = new THREE.Mesh(geometry, cubeMaterials);
+      floor.castShadow = true;
+      //wall.receiveShadow = true;
+   
+   location.add(floor);
+}
 
