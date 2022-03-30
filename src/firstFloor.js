@@ -1,4 +1,4 @@
-import * as THREE from  'three';
+import * as THREE from 'three';
 import {setMaterial,
         createFourBasicWallRoom,
         createWall} from './util/util.js'
