@@ -1,6 +1,4 @@
-import { MaxEquation } from 'three';
-import * as THREE from '../../../build/three.module.js';
-
+import * as THREE from  'three';
 
 // Function to set basic material or textures
 // You can set just a color, just a texture or both
