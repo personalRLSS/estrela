@@ -166,6 +166,7 @@ export function cut(base, cut, posx, posy, posz, receiveShadow = true, location 
    let box = new THREE.Box3().setFromObject( cut );
    let size = new THREE.Vector3();
    box.getSize(size);
+   console.log(size)
    cut.position.set(posx+size.x/2, posy+size.y/2, posz+size.z/2)
    updateObject(cut) // update internal coords
 

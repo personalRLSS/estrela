@@ -8,8 +8,7 @@ import {initRenderer,
         onWindowResize} from "../libs/util/util.js";
 import {createFirstFloor} from './firstFloor.js'
 import {createSecondFloor} from './secondFloor.js'
-import {colorPresetLight, 
-        colorPresetDark} from "./util/colors.js";
+import {color} from "./util/settings.js";
 
 
 var stats = new Stats();          // To show FPS information
@@ -32,8 +31,6 @@ var trackballControls = new TrackballControls( camera, renderer.domElement );
 // Show axes (parameter is size of each axis)
 var axesHelper = new THREE.AxesHelper( 12 );
 scene.add( axesHelper );
-
-let color = new colorPresetLight();
 
 //-- First Floor ---------------------------------------------
 let firstFloor = createFirstFloor(color);
