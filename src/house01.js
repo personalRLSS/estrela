@@ -23,7 +23,7 @@ var renderer = initRenderer();    // View function in util/utils
 renderer.setPixelRatio( window.devicePixelRatio );
 renderer.setSize( window.innerWidth, window.innerHeight );
 renderer.xr.enabled = true;
-renderer.outputEncoding = THREE.sRGBEncoding;
+//renderer.outputEncoding = THREE.sRGBEncoding;
 renderer.shadowMap.enabled = true;
 let moveCamera; // Move when a button is pressed 
 
@@ -103,6 +103,10 @@ function move()
 		cameraHolder.translateY(moveTo.y);
 		cameraHolder.translateZ(moveTo.z);	
 	}
+   else
+   {
+      trackballControls.update(); // Enable mouse movements
+   }
 }
 
 function onSelectStart( ) 
@@ -132,7 +136,6 @@ function animate()
 function render()
 {
   stats.update(); // Update FPS
-  //trackballControls.update(); // Enable mouse movements
   move();
   requestAnimationFrame(render);
   renderer.render(scene, camera) // Render scene
