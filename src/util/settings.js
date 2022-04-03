@@ -5,7 +5,10 @@ export function colorPresetLight() {
    this.basePlaneTexture = './assets/sand.jpg'
    this.garageFloorTexture = './assets/paper.png'
    this.floorSides = 'whitesmoke'
+   this.grass = './assets/grass.jpg'
    this.secondFloorMat = './assets/wood.png'
+   this.thirdFloorMat = './assets/cement.jpg'
+   this.cmat = './assets/porcelanatoC.png'
 //   this.secondFloorWalls = 'linen'
 }
 

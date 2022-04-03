@@ -105,6 +105,23 @@ export function createWallBasic(sizeX, sizeY, sizeZ,
    else          location.add(wall);
 }
 
+export function createWallTextured(
+   sizeX, sizeY, sizeZ, 
+   moveX, moveY, moveZ, 
+   material, location = null)
+{
+   let geometry = new THREE.BoxGeometry(sizeX, sizeY, sizeZ).toNonIndexed();
+   geometry.translate(moveX+sizeX/2.0, moveY+sizeY/2.0, moveZ+sizeZ/2.0); 
+   let wall = new THREE.Mesh(geometry, material);
+   wall.castShadow = true;
+   //wall.receiveShadow = true;  
+
+   // Return the room if location is not set. Otherwise, add room to provided location
+   if(!location) return wall;
+   else          location.add(wall);
+}
+
+
 export function createFloor(sizeX, sizeY, sizeZ, 
                             moveX, moveY, moveZ,
                             mat, repU, repV, location = null)
@@ -166,7 +183,6 @@ export function cut(base, cut, posx, posy, posz, receiveShadow = true, location 
    let box = new THREE.Box3().setFromObject( cut );
    let size = new THREE.Vector3();
    box.getSize(size);
-   console.log(size)
    cut.position.set(posx+size.x/2, posy+size.y/2, posz+size.z/2)
    updateObject(cut) // update internal coords
 
