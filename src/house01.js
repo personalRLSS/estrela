@@ -137,6 +137,6 @@ function render()
 {
   stats.update(); // Update FPS
   move();
-  requestAnimationFrame(render);
+  //requestAnimationFrame(render);
   renderer.render(scene, camera) // Render scene
 }
