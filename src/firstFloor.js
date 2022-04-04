@@ -18,7 +18,7 @@ function buildStairs(x, y, z, color)
    for(let i = 0; i < 16; i++)
    {
       geometry = new THREE.BoxGeometry(x, y, z);
-      geometry.translate(i*x, i*z,0); // To avoid conflict with the axeshelper
+      geometry.translate(i*x, 0, i*z); // To avoid conflict with the axeshelper
       step = new THREE.Mesh(geometry, setMaterial(color));
       step.castShadow = true;
       stair.add(step);
@@ -32,22 +32,22 @@ export function createFirstFloor(color)
 
    // create base plane
 
-   var basePlaneGeometry = new THREE.PlaneGeometry(28, 28);
-      basePlaneGeometry.rotateX(degreesToRadians(-90));
-      basePlaneGeometry.translate(7, -0.04, -7); // To avoid conflict with the axeshelper
-   var basePlaneMaterial = setMaterial(null,color.basePlaneTexture, 7, 7);
-      var basePlane = new THREE.Mesh(basePlaneGeometry, basePlaneMaterial);
-         basePlane.receiveShadow = true;
-
    // var basePlaneGeometry = new THREE.PlaneGeometry(28, 28);
-   // basePlaneGeometry.translate(7, 7, -0.04); // To avoid conflict with the axeshelper
+   //    basePlaneGeometry.rotateX(degreesToRadians(-90));
+   //    basePlaneGeometry.translate(7, -0.04, -7); // To avoid conflict with the axeshelper
    // var basePlaneMaterial = setMaterial(null,color.basePlaneTexture, 7, 7);
-   // var basePlane = new THREE.Mesh(basePlaneGeometry, basePlaneMaterial);
-   //    basePlane.receiveShadow = true;
+   //    var basePlane = new THREE.Mesh(basePlaneGeometry, basePlaneMaterial);
+   //       basePlane.receiveShadow = true;
+   // firstFloor.add(basePlane);   
+
+   var basePlaneGeometry = new THREE.PlaneGeometry(28, 28);
+   basePlaneGeometry.translate(7, 7, -0.04); // To avoid conflict with the axeshelper
+   var basePlaneMaterial = setMaterial(null,color.basePlaneTexture, 7, 7);
+   var basePlane = new THREE.Mesh(basePlaneGeometry, basePlaneMaterial);
+      basePlane.receiveShadow = true;
    // // add the plane to the scene
    firstFloor.add(basePlane);   
 
-   /*
    // create garage floor
    var planeGeometry = new THREE.PlaneGeometry(14, 12);
    planeGeometry.translate(7.0, 6.0, -0.02); // To avoid conflict with the axeshelper
@@ -79,6 +79,6 @@ export function createFirstFloor(color)
    let stairs = buildStairs(0.27, 1.10, 0.18, color.garageWalls);
    stairs.position.set(5, 6+0.7, 0.09); // To avoid conflict with the axeshelper
    firstFloor.add(stairs);
-*/
+
    return firstFloor;
 }

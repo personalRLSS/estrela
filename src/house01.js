@@ -45,10 +45,9 @@ let trackballControls = new TrackballControls( camera, renderer.domElement );
    trackballControls.target.set(10,3,-4);   
 
 let flyCamera = new FlyControls( cameraFly, renderer.domElement );
-   flyCamera.movementSpeed = 5;
+   flyCamera.movementSpeed = 3;
    flyCamera.domElement = renderer.domElement;
    flyCamera.rollSpeed = 0.2;
-
 
 // Show axes (parameter is size of each axis)
 var axesHelper = new THREE.AxesHelper( 7 );
@@ -59,18 +58,22 @@ scene.add( axesHelper );
 // VR Camera
 var cameraVR = setVRMode(renderer, scene)
 
+let house = new THREE.Object3D();
+
 //-- First Floor ---------------------------------------------
 let firstFloor = createFirstFloor(color);
-scene.add(firstFloor);
+house.add(firstFloor);
 
-// //-- Second Floor ---------------------------------------------
-// let secondFloor = createSecondFloor(color);
-// scene.add(secondFloor);
+//-- Second Floor ---------------------------------------------
+let secondFloor = createSecondFloor(color);
+house.add(secondFloor);
 
-// //-- Third Floor ---------------------------------------------
-// let thirdFloor = createThirdFloor(color);
-// //thirdFloor.visible = false;
-// scene.add(thirdFloor);
+//-- Third Floor ---------------------------------------------
+let thirdFloor = createThirdFloor(color);
+house.add(thirdFloor);
+
+house.rotateX(degreesToRadians(-90)) // Adjust VR view
+scene.add(house)
 
 // Use this to show information onscreen
 var controls = new InfoBox();
@@ -98,9 +101,9 @@ function buildInterface()
   gui.add(controls, 'flyMode', true)
     .onChange(function() { controls.onFlyMode() })
     .name("Fly Mode");  
-  //gui.add(firstFloor, 'visible', true).name("First Floor");
-//   gui.add(secondFloor, 'visible', true).name("Second Floor");
-//   gui.add(thirdFloor, 'visible', true).name("Third Floor");
+  gui.add(firstFloor, 'visible', true).name("First Floor");
+  gui.add(secondFloor, 'visible', true).name("Second Floor");
+  gui.add(thirdFloor, 'visible', true).name("Third Floor");
 }
 
 //-- Main loop -----------------------------------------------------------------------------------
