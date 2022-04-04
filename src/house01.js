@@ -11,11 +11,8 @@ import {createFirstFloor} from './firstFloor.js'
 import {createSecondFloor} from './secondFloor.js'
 import {createThirdFloor} from './thirdFloor.js'
 import {color} from "./util/settings.js";
-
-// VR
-import { VRButton } from '../build/jsm/webxr/VRButton.js';
-import {setFlyNonVRBehavior,
-        updateFlyNonVRBehavior} from "../libs/util/utilVR.js";
+import { setVRMode,
+         moveVR} from "./util/VRMode.js";
 
 
 var stats = new Stats();          // To show FPS information
@@ -45,25 +42,9 @@ var axesHelper = new THREE.AxesHelper( 7 );
 scene.add( axesHelper );
 
 //-- Create VR button and settings ---------------------------------------------------------------
-let moveCamera; // Move when a button is pressed 
 
 // VR Camera
-var cameraVR = new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, .1, 1000 );
-
-//-- 'Camera Holder' to help moving the camera
-let cameraHolder = new THREE.Object3D();
-	cameraHolder.position.set(0, 1.5, 5.0);
-cameraHolder.add(cameraVR);
-scene.add( cameraHolder );
-
-document.body.appendChild( renderer.domElement );
-document.body.appendChild( VRButton.createButton( renderer ) );
-
-// controllers
-var controller1 = renderer.xr.getController( 0 );
-	controller1.addEventListener( 'selectstart', onSelectStart );
-	controller1.addEventListener( 'selectend', onSelectEnd );
-camera.add( controller1 );
+var cameraVR = setVRMode(renderer, scene)
 
 //-- First Floor ---------------------------------------------
 let firstFloor = createFirstFloor(color);
@@ -87,35 +68,6 @@ var controls = new InfoBox();
 buildInterface();
 animate();
 
-
-function move()
-{
-	if(moveCamera)
-	{
-		// Get Camera Rotation
-		let quaternion = new THREE.Quaternion();
-		quaternion = cameraVR.quaternion;
-
-		// Get direction to translate from quaternion
-		var moveTo = new THREE.Vector3(0.0, 0.0, -0.1);
-		moveTo.applyQuaternion(quaternion);
-
-		// Move the camera Holder to the computed direction
-		cameraHolder.translateX(moveTo.x);
-		cameraHolder.translateY(moveTo.y);
-		cameraHolder.translateZ(moveTo.z);
-	}
-}
-
-function onSelectStart( ) 
-{
-	moveCamera = true;
-}
-
-function onSelectEnd( ) 
-{
-	moveCamera = false;
-}
 
 function buildInterface()
 {
@@ -142,7 +94,7 @@ function render()
   }
   else
   {
-     move(); 
+     moveVR(); 
      renderer.render(scene, cameraVR) // Render scene
   }
 }
