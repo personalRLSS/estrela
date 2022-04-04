@@ -2,7 +2,7 @@ import * as THREE from 'three';
 import Stats from       '../build/jsm/libs/stats.module.js';
 import GUI from '../libs/util/dat.gui.module.js';
 import {TrackballControls} from '../build/jsm/controls/TrackballControls.js';
-import { FlyControls } from '../../build/jsm/controls/FlyControls.js';
+import { FlyControls } from '../build/jsm/controls/FlyControls.js';
 import {initRenderer, 
         initDefaultBasicLight,
         InfoBox,
