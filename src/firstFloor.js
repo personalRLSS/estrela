@@ -15,7 +15,7 @@ function buildStairs(x, y, z, color)
 {
    let stair = new THREE.Object3D();
    let geometry, step;
-   for(let i = 0; i < 16; i++)
+   for(let i = 0; i <= 16; i++)
    {
       geometry = new THREE.BoxGeometry(x, y, z);
       geometry.translate(i*x, 0, i*z); // To avoid conflict with the axeshelper
@@ -31,21 +31,12 @@ export function createFirstFloor(color)
    let firstFloor = new THREE.Object3D();
 
    // create base plane
-
-   // var basePlaneGeometry = new THREE.PlaneGeometry(28, 28);
-   //    basePlaneGeometry.rotateX(degreesToRadians(-90));
-   //    basePlaneGeometry.translate(7, -0.04, -7); // To avoid conflict with the axeshelper
-   // var basePlaneMaterial = setMaterial(null,color.basePlaneTexture, 7, 7);
-   //    var basePlane = new THREE.Mesh(basePlaneGeometry, basePlaneMaterial);
-   //       basePlane.receiveShadow = true;
-   // firstFloor.add(basePlane);   
-
    var basePlaneGeometry = new THREE.PlaneGeometry(28, 28);
    basePlaneGeometry.translate(7, 7, -0.04); // To avoid conflict with the axeshelper
-   var basePlaneMaterial = setMaterial(null,color.basePlaneTexture, 7, 7);
+   var basePlaneMaterial = setMaterial(null,color.basePlaneTexture, 15, 15);
    var basePlane = new THREE.Mesh(basePlaneGeometry, basePlaneMaterial);
       basePlane.receiveShadow = true;
-   // // add the plane to the scene
+   // add the plane to the scene
    firstFloor.add(basePlane);   
 
    // create garage floor
@@ -67,7 +58,7 @@ export function createFirstFloor(color)
 
    // Bloco traseiro
    let bloco1 = createFourBasicWallRoom(14, 6, 3,  0, 6, 0, color.garageWalls);
-   bloco1 = cut(bloco1, doorG, 4, 6, 0, false);
+   bloco1 = cut(bloco1, doorG, 3.60, 6, 0, false);
    bloco1 = cut(bloco1, doorP, 1.25, 6-0.12, 0, false);  
    firstFloor.add(bloco1)
 
@@ -77,7 +68,7 @@ export function createFirstFloor(color)
    firstFloor.add(frontBlock);
    
    let stairs = buildStairs(0.27, 1.10, 0.18, color.garageWalls);
-   stairs.position.set(5, 6+0.7, 0.09); // To avoid conflict with the axeshelper
+   stairs.position.set(4.70, 6+0.7, 0.09); // To avoid conflict with the axeshelper
    firstFloor.add(stairs);
 
    return firstFloor;

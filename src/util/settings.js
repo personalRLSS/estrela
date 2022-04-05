@@ -2,9 +2,10 @@ import * as THREE from 'three';
 
 export function colorPresetLight() {
    this.garageWalls = 'antiquewhite'
-   this.basePlaneTexture = './assets/sand.jpg'
+   this.basePlaneTexture = './assets/intertravado.jpg'
    this.garageFloorTexture = './assets/paper.png'
-   this.floorSides = 'whitesmoke'
+   this.floorSides = 'antiquewhite'
+   this.secondFloorWalls = 'antiquewhite'
    this.grass = './assets/grass.jpg'
    this.secondFloorMat = './assets/wood.png'
    this.thirdFloorMat = './assets/cement.jpg'

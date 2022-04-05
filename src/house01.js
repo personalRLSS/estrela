@@ -24,7 +24,7 @@ renderer.setSize( window.innerWidth, window.innerHeight );
 renderer.xr.enabled = true;
 renderer.shadowMap.enabled = true;
 
-let flyMode = true;
+let flyMode = false;
 
 window.addEventListener( 'resize', function(){onWindowResize(camera, renderer)}, false );
 initDefaultBasicLight(scene, true, new THREE.Vector3(25, 30, 20), 100, 1024, 0.1, 200) ;	
@@ -90,7 +90,7 @@ function buildInterface()
    // Interface
    var controls = new function ()
    {
-      this.flyMode = true;
+      this.flyMode = false;
 
       this.onFlyMode = function(){
          flyMode = this.flyMode;
