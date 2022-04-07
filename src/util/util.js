@@ -73,7 +73,28 @@ export function createThreeBasicWallRoom( sizex, sizey, sizez,
    else          location.add(room);
 }
 
-export function createWall(
+
+// Parede com 0.12 de parede e 3m de altura.
+// Orientação pode ser "H"orizontal ou "V"ertical
+export function createWall(orientation, size, moveX, moveY, moveZ, 
+                           material, location = null)
+{
+   let sizeX = 0.12, sizeY = 0.12, sizeZ = 3.0;
+   if(orientation == 'H') sizeX = size;
+   else                   sizeY = size;
+
+   let geometry = new THREE.BoxGeometry(sizeX, sizeY, sizeZ).toNonIndexed();
+   geometry.translate(moveX+sizeX/2.0, moveY+sizeY/2.0, moveZ+sizeZ/2.0); 
+   let wall = new THREE.Mesh(geometry, setMaterial(material));
+      wall.castShadow = true;
+      //wall.receiveShadow = true;  
+
+   // Return the room if location is not set. Otherwise, add room to provided location
+   if(!location) return wall;
+   else          location.add(wall);
+}
+
+export function createWallComplex(
    sizeX, sizeY, sizeZ, 
    moveX, moveY, moveZ,
    matx, matxneg = null,
