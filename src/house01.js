@@ -5,6 +5,8 @@ import {TrackballControls} from '../build/jsm/controls/TrackballControls.js';
 import { FlyControls } from '../build/jsm/controls/FlyControls.js';
 import {initRenderer, 
         initDefaultBasicLight,
+        lightFollowingCamera,
+        initDefaultSpotlight,
         InfoBox,
         onWindowResize,
         degreesToRadians} from "../libs/util/util.js";
@@ -27,8 +29,9 @@ renderer.shadowMap.enabled = true;
 let flyMode = false;
 
 window.addEventListener( 'resize', function(){onWindowResize(camera, renderer)}, false );
-initDefaultBasicLight(scene, true, new THREE.Vector3(25, 30, 20), 100, 1024, 0.1, 200) ;	
-
+initDefaultBasicLight(scene, true, new THREE.Vector3(8, 8, 5), 100, 1024, 0.1, 200) ;	
+var light = initDefaultSpotlight(scene, new THREE.Vector3(-10, -2, -2)); // Use default light
+//    light.target.position.y = 0.5
 // Main camera
 let camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
   camera.position.set(21, 12, 12);    

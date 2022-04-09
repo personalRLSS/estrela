@@ -9,7 +9,8 @@ import {setMaterial,
         createCutMesh,
         createWallBasic,
         createFloor,
-        createWallTextured} from './util/util.js'
+        createWallTextured,
+        createGuardaCorpo} from './util/util.js'
 
 import { door,
          doorVidro,
@@ -106,6 +107,9 @@ export function createSecondFloor(color)
    secondFloor.add(wall);  // wall 14
 
    buildC(color, secondFloor);
+
+   let guardaCorpo = createGuardaCorpo(0.02, 13.9, 20,  0.2, 3,  7.4, 0.0, 3.7, color.bronze) 
+   secondFloor.add(guardaCorpo)
 
    return secondFloor;
 }

@@ -1,5 +1,6 @@
 import { CSG } from '../../libs/other/CSGMesh.js' 
 import * as THREE from 'three';
+import {degreesToRadians} from "../../libs/util/util.js";
 
 // Function to set basic material or textures
 // You can set just a color, just a texture or both
@@ -220,4 +221,57 @@ export function cut(base, cut, posx, posy, posz, receiveShadow = true, location 
    output.receiveShadow = receiveShadow;
 
    return output;
+}
+
+export function createCylinder(material, radiusTop, radiusBottom, height, radialSegments, heightSegments, openEnded = null)
+{
+  var geometry = new THREE.CylinderGeometry(radiusTop, radiusBottom, height, radialSegments, heightSegments, openEnded);
+  var object = new THREE.Mesh(geometry, material);
+    object.castShadow = true;
+
+  return object;
+}
+
+export function createGuardaCorpo(diameter, size, seg, spacing, numberOfTubes,
+                                  movex, movey, movez, color)
+{
+   let tubes = numberOfTubes - 1; // 3 inner tubes + 1 superior
+   let mat = new THREE.MeshPhongMaterial({color: color});
+   let guardaCorpo = new THREE.Object3D();
+   let c1, i
+
+   // Barras horizontais
+   for(i = 0; i < spacing * tubes; i+=spacing )
+   {
+      c1 = createCylinder(mat, diameter, diameter, size, seg, seg, false)
+      c1.translateZ(i)
+      guardaCorpo.add(c1)
+   }
+   c1 = createCylinder(mat, diameter*2, diameter*2, size, seg, seg, false)
+   c1.translateZ(spacing * tubes + spacing/4)
+   guardaCorpo.add(c1)
+
+   // Barras verticais
+   let dist = 2
+   let barrasVerticais = new THREE.Object3D();
+   let sizeV = numberOfTubes*spacing+spacing
+   for(i = 0; i <= size; i+=dist )
+   {
+      c1 = createCylinder(mat, diameter, diameter, sizeV, seg, seg)
+      c1.translateY(i)
+      c1.rotateX(degreesToRadians(90))
+      barrasVerticais.add(c1)
+   }
+   barrasVerticais.translateZ(sizeV/2 - spacing*1.6)
+   barrasVerticais.translateY(-size/2)
+
+   guardaCorpo.add(barrasVerticais)
+
+
+   guardaCorpo.translateX(movex)
+   guardaCorpo.translateY(movey)
+   guardaCorpo.translateZ(movez)
+   guardaCorpo.rotateZ(degreesToRadians(90))
+   
+   return guardaCorpo
 }

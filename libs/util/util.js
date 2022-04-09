@@ -163,7 +163,16 @@ export class MinMaxGUIHelper {
  */
 export function lightFollowingCamera(light, camera)
 {
-  light.position.copy( camera.position );
+  light.position.copy(camera.position)
+
+  		// Get direction to translate from quaternion
+        //var moveTo = light.position
+       // moveTo.applyQuaternion(camera.quaternion);
+  
+        // Move the camera Holder to the computed direction
+        //light.lookAt(moveTo.x,moveTo.y,moveTo.z);
+   light.quaternion.copy(camera.quaternion);
+ // light.target.position.copy( target );
 }
 
 
@@ -301,18 +310,19 @@ export function initDefaultSpotlight(scene, initialPosition) {
     var spotLight = new THREE.SpotLight(0xffffff);
     spotLight.name = "spotLight"
     spotLight.position.copy(position);
-    spotLight.castShadow = true;
+   // spotLight.castShadow = true;
     spotLight.distance = 0;    
+    spotLight.intensity = 0.5;
     spotLight.decay = 2;
     spotLight.penumbra = 0.5;
-    spotLight.angle = degreesToRadians(40);    
-    spotLight.shadow.mapSize.width = 512;
-    spotLight.shadow.mapSize.height = 512;
+    spotLight.angle = degreesToRadians(60);    
+   //  spotLight.shadow.mapSize.width = 512;
+   //  spotLight.shadow.mapSize.height = 512;
     scene.add(spotLight);
 
-    var ambientLight = new THREE.AmbientLight(0x343434);
-    ambientLight.name = "ambientLight";
-    scene.add(ambientLight);
+   //  var ambientLight = new THREE.AmbientLight(0x343434);
+   //  ambientLight.name = "ambientLight";
+   //  scene.add(ambientLight);
 
     return spotLight; // RETURN ADDED IN MAI/2020
 }
