@@ -14,6 +14,7 @@ import {initRenderer,
 import {createFirstFloor} from './firstFloor.js'
 import {createSecondFloor} from './secondFloor.js'
 import {createThirdFloor} from './thirdFloor.js'
+import {createWall} from './util/util.js'
 import {color} from "./util/settings.js";
 import { setVRMode,
          moveVR} from "./util/VRMode.js";
@@ -77,7 +78,12 @@ house.add(secondFloor);
 let thirdFloor = createThirdFloor(color);
 house.add(thirdFloor);
 
-house.rotateX(degreesToRadians(-90)) // Adjust VR view
+let colorCube = createWall("H", 1,  13,-0.2, 0, "rgb(255,255,255)")
+   colorCube.visible = false;
+house.add(colorCube)
+
+ // Rotate all house to Adjust VR view
+house.rotateX(degreesToRadians(-90))
 scene.add(house)
 
 // Use this to show information onscreen
@@ -92,6 +98,10 @@ animate();
 
 function buildInterface()
 {
+   const params = {
+      color: "rgb(255,0,0)"
+    };
+   
    // Interface
    var controls = new function ()
    {
@@ -102,13 +112,16 @@ function buildInterface()
       };
    }; 
 
-  var gui = new GUI();
-  gui.add(controls, 'flyMode', true)
-    .onChange(function() { controls.onFlyMode() })
-    .name("Fly Mode");  
-  gui.add(firstFloor, 'visible', true).name("First Floor");
-  gui.add(secondFloor, 'visible', true).name("Second Floor");
-  gui.add(thirdFloor, 'visible', true).name("Third Floor");
+   var gui = new GUI();
+   gui.add(controls, 'flyMode', true)
+      .onChange(function() { controls.onFlyMode() })
+      .name("Fly Mode");  
+   gui.add(firstFloor, 'visible', true).name("First Floor");
+   gui.add(secondFloor, 'visible', true).name("Second Floor");
+   gui.add(thirdFloor, 'visible', true).name("Third Floor");
+   if(colorCube.visible)
+      gui.addColor(params, 'color').onChange(function(value) {
+         colorCube.material.color.set(value)});
 }
 
 //-- Main loop -----------------------------------------------------------------------------------

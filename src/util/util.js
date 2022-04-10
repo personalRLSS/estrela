@@ -236,7 +236,7 @@ export function createGuardaCorpo(diameter, size, seg, spacing, numberOfTubes,
                                   movex, movey, movez, color)
 {
    let tubes = numberOfTubes - 1; // 3 inner tubes + 1 superior
-   let mat = new THREE.MeshPhongMaterial({color: color});
+   let mat = new THREE.MeshPhongMaterial({color: color, shininess:"50",specular:color});
    let guardaCorpo = new THREE.Object3D();
    let c1, i
 

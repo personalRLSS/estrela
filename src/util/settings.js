@@ -1,7 +1,7 @@
 // Main settings
 
 export function colorPresetLight() {
-   let parede = 'LemonChiffon'//'rgb(255, 255, 255)'
+   let parede = 'rgb(255,246,198)'
    this.garageWalls = parede
    this.basePlaneTexture = './assets/intertravado.jpg'
    this.garageFloorTexture = './assets/paper.png'
@@ -13,7 +13,7 @@ export function colorPresetLight() {
    this.secondFloorMat = './assets/wood.png'
    this.thirdFloorMat = './assets/darkcement.jpg'
    this.cmat = './assets/porcelanatoC.png'
-   this.bronze = 'rgb(180,100,30)'
+   this.bronze = 'rgb(128,74,1)'//'rgb(180,100,30)'
 }
 
 export function colorPresetDark() 

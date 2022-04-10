@@ -45,7 +45,7 @@ export function createSecondFloor(color)
 
    secondFloor.add(floor);
 
-   let greenFloor = createFloor(4.5, 13, 0.27,   10.01, 6, 2.95,  color.grass,2,6); 
+   let greenFloor = createFloor(4.5, 13.1, 0.27,   10.01, 6, 2.95,  color.grass,2,6); 
 
    secondFloor.add(greenFloor);
 
@@ -60,18 +60,34 @@ export function createSecondFloor(color)
    // paredes principais verticais (em y)
    let wall
    wall = createWall('V', 19,   -0.01, 0, 3.20,  color.secondFloorWalls);
-   let window2 = createCutMesh(1, 1, 1);
-   wall = cut(wall, window2, 0, 2.5, 4.5, false);
+   let window1 = createCutMesh(1, 1, 1);
+   let window2 = createCutMesh(1, 2, 1);
+   wall = cut(wall, window2, -0.5, 2.5, 4.5, false);
+   wall = cut(wall, window1, -0.5, 6.75, 4.5, false);
+   wall = cut(wall, window1, -0.5, 9, 4.5, false);
+   wall = cut(wall, window1, -0.5, 11.25, 4.5, false);
+   wall = cut(wall, window1, -0.5, 13.5, 4.5, false);
+   wall = cut(wall, window1, -0.5, 17, 4.5, false);   
    secondFloor.add(wall); // wall 1 
 
    wall = createWall('V', 17.5,  5, 1.50, 3.20,  color.secondFloorWalls);
+   wall = cut(wall, doorPV, 5, 5.2, 3.20, false);
+   wall = cut(wall, doorPV, 5, 6.75, 3.20, false);
+   wall = cut(wall, doorPV, 5, 9, 3.20, false);
+   wall = cut(wall, doorPV, 5, 11.25, 3.20, false);
+   wall = cut(wall, doorPV, 5, 13.5, 3.20, false);
+   wall = cut(wall, doorPV, 5, 17, 3.20, false);
    secondFloor.add(wall);  // wall 2
 
    wall = createWall('V', 8.5,  6.5, 10.5, 3.20,  color.secondFloorWalls);
+   wall = cut(wall, doorPV, 6.5, 11.25, 3.20, false);
+   wall = cut(wall, doorPV, 6.5, 17, 3.20, false);
    secondFloor.add(wall);  // wall 3
 
    wall = createWall('V', 13,  10, 6, 3.20,  color.secondFloorWalls);
    wall = cut(wall, doorVidroV, 10, 8, 3.20, false); // porta suite
+   wall = cut(wall, window2, 10, 12.5, 4.5, false);
+   wall = cut(wall, window2, 10, 16.5, 4.5, false);
    secondFloor.add(wall);  // wall 4
 
    // paredes principais horizontais (em x)
@@ -108,6 +124,10 @@ export function createSecondFloor(color)
    // Outras paredes
    wall = createWall('V', 4.6,  8, 1.50, 3.20,  color.secondFloorWalls);
    secondFloor.add(wall);  // wall 14
+
+   wall = createWall('H', 2,  8, 6.0, 3.20,  color.secondFloorWalls);
+   secondFloor.add(wall);  // wall 15
+
 
    buildC(color, secondFloor);
 
