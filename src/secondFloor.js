@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import { CSG } from '../libs/other/CSGMesh.js' 
 import {setMaterial,
+        buildLowerTexture,
         createThreeBasicWallRoom,
         createFourBasicWallRoom,
         updateObject,
@@ -21,9 +22,9 @@ export function buildC(color, location = null)
 {
    let material = setMaterial(null, color.cmat, 10, 3);
    // paredes principais verticais (em y)
-   let base = createWallTextured(14.6, 0.2, 3.5,   0, -0.1, 3,  material);
-   let cut1 = createCutMesh(15, 0.3, 2.5);
-   base = cut(base, cut1, 0.5, -0.1, 3.5, false);
+   let base = createWallTextured(14.6, 0.2, 3.5,   0, -0.1, 2.9,  material);
+   let cut1 = createCutMesh(15, 0.3, 2.3);
+   base = cut(base, cut1, 0.6, -0.1, 3.6, false);
    base = cut(base, cut1, 10.6, -0.1, 4.5, false);
    base.material = material;
    location.add(base); // wall 1    
@@ -37,12 +38,14 @@ export function createSecondFloor(color)
    let piscina = createCutMesh(3, 2, 2);
    floor = cut(floor, piscina, 11.5, 1, 3);
 
+   buildLowerTexture(secondFloor, 14.5, 19,  0, 0, 2.98,  color.secondFloorTeto, 3, 3)
+
    let stairHole = createCutMesh(3.5, 1.10, 2);
    floor = cut(floor, stairHole, 6.5, 6.1, 3);
 
    secondFloor.add(floor);
 
-   let greenFloor = createFloor(4.5, 13, 0.25,   10.01, 6, 3,  color.grass,2,6); 
+   let greenFloor = createFloor(4.5, 13, 0.27,   10.01, 6, 2.95,  color.grass,2,6); 
 
    secondFloor.add(greenFloor);
 
@@ -56,7 +59,7 @@ export function createSecondFloor(color)
 
    // paredes principais verticais (em y)
    let wall
-   wall = createWall('V', 19,   0, 0, 3.20,  color.secondFloorWalls);
+   wall = createWall('V', 19,   -0.01, 0, 3.20,  color.secondFloorWalls);
    let window2 = createCutMesh(1, 1, 1);
    wall = cut(wall, window2, 0, 2.5, 4.5, false);
    secondFloor.add(wall); // wall 1 

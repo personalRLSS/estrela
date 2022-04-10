@@ -5,8 +5,10 @@ export function colorPresetLight() {
    this.garageWalls = parede
    this.basePlaneTexture = './assets/intertravado.jpg'
    this.garageFloorTexture = './assets/paper.png'
+   this.gesso = './assets/gesso.jpg'
    this.floorSides = parede
    this.secondFloorWalls = parede
+   this.secondFloorTeto = './assets/teto.jpg'
    this.grass = './assets/grass.jpg'
    this.secondFloorMat = './assets/wood.png'
    this.thirdFloorMat = './assets/darkcement.jpg'

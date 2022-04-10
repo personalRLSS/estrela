@@ -275,3 +275,20 @@ export function createGuardaCorpo(diameter, size, seg, spacing, numberOfTubes,
    
    return guardaCorpo
 }
+
+export function buildLowerTexture(
+   location, sizex, sizey,  movex, movey, movez, 
+   texture, repU, repV)
+{
+   movex += sizex/2;
+   movey += sizey/2;
+   
+   // create base plane
+   var basePlaneGeometry = new THREE.PlaneGeometry(sizex, sizey);
+   basePlaneGeometry.translate(movex, movey, movez); // To avoid conflict with the axeshelper
+
+   var basePlaneMaterial = setMaterial(null,texture, repU, repV);
+      basePlaneMaterial.side = THREE.BackSide
+   var basePlane = new THREE.Mesh(basePlaneGeometry, basePlaneMaterial);
+   location.add(basePlane); 
+}

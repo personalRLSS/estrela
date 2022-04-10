@@ -48,7 +48,7 @@ export function createFirstFloor(color)
    firstFloor.add(plane);   
    
    let stairs = buildStairs(0.27, 1.10, 0.18, color.garageWalls);
-   stairs.position.set(11, 6+0.7, 0.09); // To avoid conflict with the axeshelper
+   stairs.position.set(10.9, 6+0.7, 0.09); // To avoid conflict with the axeshelper
    firstFloor.add(stairs);
 
    let doorGH = createCutMesh(doorMain.l, doorMain.p, doorMain.a);
@@ -65,8 +65,8 @@ export function createFirstFloor(color)
    wall = cut(wall, doorGV, 11, 4, 0, false);
    firstFloor.add(wall)
 
-   wall = createWall('H', 11,   0, 6, 0,  color.garageWalls)
-   wall = cut(wall, doorGH, 1, 6, 0, false);
+   wall = createWall('H', 11,   0, 5.9, 0,  color.garageWalls)
+   wall = cut(wall, doorGH, 1, 5.9, 0, false);
    firstFloor.add(wall)
 
    createWall('V', 6,  0, 6, 0,  color.garageWalls, firstFloor)

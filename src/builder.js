@@ -10,6 +10,18 @@ import {initRenderer,
         degreesToRadians} from "../libs/util/util.js";
 import {color} from "./util/settings.js";
 
+import {setMaterial,
+   createThreeBasicWallRoom,
+   createFourBasicWallRoom,
+   updateObject,
+   cut,
+   createWall,
+   createCutMesh,
+   createWallBasic,
+   createFloor,
+   createWallTextured,
+   createGuardaCorpo} from './util/util.js'
+
 var stats = new Stats();          // To show FPS information
 var scene = new THREE.Scene();    // Create main scene
 let clock = new THREE.Clock();
@@ -35,53 +47,10 @@ scene.add( axesHelper );
 builder();
 animate();
 
-function createCylinder(material, radiusTop, radiusBottom, height, radialSegments, heightSegments, openEnded = null)
-{
-  var geometry = new THREE.CylinderGeometry(radiusTop, radiusBottom, height, radialSegments, heightSegments, openEnded);
-  var object = new THREE.Mesh(geometry, material);
-    object.castShadow = true;
-
-  return object;
-}
-
 function builder()
 {
-   let diameter = 0.05
-   let size = 10
-   let seg = 20
-   let spacing = 0.3
-   let numberOfTubes = 3
-   let c1, guardaCorpo = new THREE.Object3D();
-   var mat = new THREE.MeshPhongMaterial({color:"rgb(205,127,50)"});
-
-   let i = 0
-   for(; i < spacing * numberOfTubes; i+=spacing )
-   {
-      c1 = createCylinder(mat, diameter, diameter, size, seg, seg)
-      c1.translateZ(i)
-      guardaCorpo.add(c1)
-   }
-   c1 = createCylinder(mat, diameter*2, diameter*2, size, seg, seg)
-   c1.translateZ(spacing * numberOfTubes + spacing/4)
-   guardaCorpo.add(c1)
-
-   // Barras verticais
-   let dist = 2
-   let barrasVerticais = new THREE.Object3D();
-   let sizeV = numberOfTubes*spacing
-   for(i = 0; i <= size; i+=dist )
-   {
-      c1 = createCylinder(mat, diameter, diameter, numberOfTubes*spacing, seg, seg)
-      c1.translateY(i)
-      c1.rotateX(degreesToRadians(90))
-      barrasVerticais.add(c1)
-   }
-   barrasVerticais.translateZ(sizeV/2)
-   barrasVerticais.translateY(-size/2)
-
-   guardaCorpo.add(barrasVerticais)
-   guardaCorpo.rotateZ(degreesToRadians(90))
-   scene.add(guardaCorpo)
+   let floor = createFloor(14.5, 19, 0.20,   0, 0, 3,  color.secondFloorMat,10,10); 
+   scene.add(floor)
 
 }
 

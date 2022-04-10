@@ -5,6 +5,7 @@ import {TrackballControls} from '../build/jsm/controls/TrackballControls.js';
 import { FlyControls } from '../build/jsm/controls/FlyControls.js';
 import {initRenderer, 
         initDefaultBasicLight,
+        initDefaultBasicLight2,
         lightFollowingCamera,
         initDefaultSpotlight,
         InfoBox,
@@ -30,6 +31,7 @@ let flyMode = false;
 
 window.addEventListener( 'resize', function(){onWindowResize(camera, renderer)}, false );
 initDefaultBasicLight(scene, true, new THREE.Vector3(8, 8, 5), 100, 1024, 0.1, 200) ;	
+initDefaultBasicLight2(scene, new THREE.Vector3(0, -1, 0))
 var light = initDefaultSpotlight(scene, new THREE.Vector3(-10, -2, -2)); // Use default light
 //    light.target.position.y = 0.5
 // Main camera

@@ -270,6 +270,14 @@ export function initCamera(initialPosition) {
     return camera;
 }
 
+export function initDefaultBasicLight2(scene, position = new THREE.Vector3(1, 1, 1)) 
+{
+  const mainLight = new THREE.DirectionalLight('white', 0.5);
+    mainLight.position.copy(position);
+
+  scene.add(mainLight);
+}
+
 export function initDefaultBasicLight(scene, castShadow = false, position = new THREE.Vector3(1, 1, 1), 
                                       shadowSide = 16, shadowMapSize = 512, shadowNear = 0.1, shadowFar = 100 ) 
 {
