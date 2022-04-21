@@ -65,11 +65,11 @@ export function createFirstFloor(color)
    wall = cut(wall, doorGV, 11, 4, 0, false);
    firstFloor.add(wall)
 
-   wall = createWall('H', 11,   0, 5.9, 0,  color.garageWalls)
+   wall = createWall('H', 10.9,   0.1, 6, 0,  color.garageWalls)
    wall = cut(wall, doorGH, 1, 5.9, 0, false);
    firstFloor.add(wall)
 
-   createWall('V', 6,  0, 6, 0,  color.garageWalls, firstFloor)
+   createWall('V', 12,  0, 0, 0,  color.garageWalls, firstFloor)
 
    return firstFloor;
 }

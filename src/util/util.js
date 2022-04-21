@@ -241,6 +241,7 @@ export function createGuardaCorpo(diameter, size, seg, spacing, numberOfTubes,
    let c1, i
 
    // Barras horizontais
+   size+=0.1
    for(i = 0; i < spacing * tubes; i+=spacing )
    {
       c1 = createCylinder(mat, diameter, diameter, size, seg, seg, false)
@@ -252,10 +253,17 @@ export function createGuardaCorpo(diameter, size, seg, spacing, numberOfTubes,
    guardaCorpo.add(c1)
 
    // Barras verticais
-   let dist = 2
+   let dist = 1.5
    let barrasVerticais = new THREE.Object3D();
    let sizeV = numberOfTubes*spacing+spacing
-   for(i = 0; i <= size; i+=dist )
+
+   // Barra inicial
+   //c1 = createCylinder(mat, diameter, diameter, sizeV, seg, seg)
+//   c1.translateY(i)
+  // c1.rotateX(degreesToRadians(90))
+   //barrasVerticais.add(c1)
+
+   for(i = 0; i <= size+1; i+=dist )
    {
       c1 = createCylinder(mat, diameter, diameter, sizeV, seg, seg)
       c1.translateY(i)

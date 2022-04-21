@@ -72,7 +72,7 @@ export function createSecondFloor(color)
 
    wall = createWall('V', 17.5,  5, 1.50, 3.20,  color.secondFloorWalls);
    wall = cut(wall, doorPV, 5, 5.2, 3.20, false);
-   wall = cut(wall, doorPV, 5, 6.75, 3.20, false);
+   //wall = cut(wall, doorPV, 5, 6.75, 3.20, false);
    wall = cut(wall, doorPV, 5, 9, 3.20, false);
    wall = cut(wall, doorPV, 5, 11.25, 3.20, false);
    wall = cut(wall, doorPV, 5, 13.5, 3.20, false);
@@ -91,13 +91,21 @@ export function createSecondFloor(color)
    secondFloor.add(wall);  // wall 4
 
    // paredes principais horizontais (em x)
-   wall = createWall('H', 8,  0, 1.50, 3.20,  color.secondFloorWalls);
-   wall = cut(wall, doorVidroH, 0.5, 1.50, 3.20, false); // porta suite
+   wall = createWall('H', 6,  2, 1.50, 3.20,  color.secondFloorWalls);
+   wall = cut(wall, doorVidroH, 2.5, 1.50, 3.20, false); // porta suite
    wall = cut(wall, doorVidroH, 5.5, 1.50, 3.20, false); // porta sala
-   wall = cut(wall, smallWindow, 3.5, 1.50, 4.70, false); // porta sala
+   //wall = cut(wall, smallWindow, 3.5, 1.50, 4.70, false); // porta sala
    secondFloor.add(wall); // wall 5
 
+   wall = createWall('V', 6.5,  2, 0.1, 3.20,  color.secondFloorWalls);
+   wall = cut(wall, doorPV, 2, 5, 3.20, false);
+   secondFloor.add(wall); // wall 16 -- final do closet
+
+   wall = createWall('H', 2,  0.1, 0.09, 3.20,  color.secondFloorWalls);
+   secondFloor.add(wall); // wall 17 -- final do closet (horizontal)
+
    wall = createWall('H' ,5,  0, 6.50, 3.20,  color.secondFloorWalls);
+   wall = cut(wall, doorPH, 2.5, 6.50, 3.2, false); // porta suite
    secondFloor.add(wall); // wall 6
 
    wall = createWall('H',5,   0, 8.00, 3.20,  color.secondFloorWalls);
@@ -131,7 +139,8 @@ export function createSecondFloor(color)
 
    buildC(color, secondFloor);
 
-   let guardaCorpo = createGuardaCorpo(0.02, 13.9, 20,  0.2, 3,  7.4, 0.0, 3.7, color.bronze) 
+   //let guardaCorpo = createGuardaCorpo(0.02, 13.9, 20,  0.2, 3,  7.4, 0.0, 3.7, color.bronze) 
+   let guardaCorpo = createGuardaCorpo(0.02, 11.9, 20,  0.2, 3,  8.05, 0.0, 3.7, color.bronze) // movex é metade do tamanho total    
    secondFloor.add(guardaCorpo)
 
    return secondFloor;
