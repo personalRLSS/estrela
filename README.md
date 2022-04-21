@@ -1,3 +1,3 @@
-# codetests
+# Misc codes
 
-https://rodrigoluis.github.io/codetests/
+https://rodrigoluis.github.io/misc/
