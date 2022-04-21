@@ -2,9 +2,8 @@ import * as THREE from 'three';
 import { setMaterial,
          cut,
          createWall,
-         createCutMesh,
-         createWallBasic,
-         createFourBasicWallRoom} from './util/util.js'
+         createWallComplex,
+         createCutMesh} from './util/util.js'
 
 // import {degreesToRadians,
 //         createGroundPlane} from "../libs/util/util.js";
@@ -32,6 +31,14 @@ export function createFirstFloor(color)
    let firstFloor = new THREE.Object3D();
 
    // create base plane
+   var groundPlaneGeometry = new THREE.PlaneGeometry(200, 200);
+   groundPlaneGeometry.translate(7, 7, -0.06); // To avoid conflict with the axeshelper
+   var groundPlaneMaterial = setMaterial(null,color.sand, 15, 15);
+   var groundPlane = new THREE.Mesh(groundPlaneGeometry, groundPlaneMaterial);
+      groundPlane.receiveShadow = true;
+   firstFloor.add(groundPlane);
+
+   // create base plane
    var basePlaneGeometry = new THREE.PlaneGeometry(28, 28);
    basePlaneGeometry.translate(7, 7, -0.04); // To avoid conflict with the axeshelper
    var basePlaneMaterial = setMaterial(null,color.basePlaneTexture, 15, 15);
@@ -56,13 +63,18 @@ export function createFirstFloor(color)
    //let doorP = createCutMesh(door.l, door.p, door.a);
 
    // Começa com parede mais ao fundo e continua em sentido horário
-   let wall
+   let wall = null
+
    createWall('H', 14,   0, 12, 0,  color.garageWalls, firstFloor)
    createWall('V', 12,  14,  0, 0,  color.garageWalls, firstFloor)
-   createWall('H', 3,   11,  0, 0,  color.garageWalls, firstFloor)
-   
-   wall = createWall('V', 6,   11,  0, 0,  color.garageWalls)
-   wall = cut(wall, doorGV, 11, 4, 0, false);
+
+   wall = createWallComplex('H', 3.35,   10.84,  -0.05, 0,  
+   setMaterial(null, color.stonewall,2,2))
+   firstFloor.add(wall)   
+
+   wall = createWallComplex('V', 6.25,   10.8,  -0.04, 0,  
+   setMaterial(null, color.stonewallrot, 2, 3))
+   wall = cut(wall, doorGV, 10.8, 4, 0, false);
    firstFloor.add(wall)
 
    wall = createWall('H', 10.9,   0.1, 6, 0,  color.garageWalls)

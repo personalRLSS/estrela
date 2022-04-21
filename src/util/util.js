@@ -95,20 +95,25 @@ export function createWall(orientation, size, moveX, moveY, moveZ,
    else          location.add(wall);
 }
 
-export function createWallComplex(
-   sizeX, sizeY, sizeZ, 
-   moveX, moveY, moveZ,
-   matx, matxneg = null,
-   maty = null, matyneg = null,
-   matz = null, matzneg = null, location = null)
+export function createWallComplex(orientation, size, moveX, moveY, moveZ,
+                                  matx, matxneg = null, maty = null, matyneg = null,  matz = null, matzneg = null, 
+                                  location = null)
 {
+   let sizeX = 0.12, sizeY = 0.12, sizeZ = 3.0;
+   if(orientation == 'H') sizeX = size;
+   else                   sizeY = size;
+
    let geometry = new THREE.BoxGeometry(sizeX, sizeY, sizeZ).toNonIndexed();
    geometry.translate(moveX+sizeX/2.0, moveY+sizeY/2.0, moveZ+sizeZ/2.0); // To avoid conflict with the axeshelper
+   
+   // P.S.: Se for cortar a geometria não funciona colocar multiplos materiais...
    let cubeMaterials = organizeMaterials(matx, matxneg, maty, matyneg, matz, matzneg);
    let wall = new THREE.Mesh(geometry, cubeMaterials);
-   wall.castShadow = true;
-   //wall.receiveShadow = true;
-   location.add(wall);
+      wall.castShadow = true;
+   
+      // Return the room if location is not set. Otherwise, add room to provided location
+   if(!location) return wall;
+   else          location.add(wall);
 }
 
 
@@ -298,5 +303,6 @@ export function buildLowerTexture(
    var basePlaneMaterial = setMaterial(null,texture, repU, repV);
       basePlaneMaterial.side = THREE.BackSide
    var basePlane = new THREE.Mesh(basePlaneGeometry, basePlaneMaterial);
-   location.add(basePlane); 
+   //location.add(basePlane); 
+   return basePlane;
 }

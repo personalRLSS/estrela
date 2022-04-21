@@ -1,15 +1,11 @@
 import * as THREE from 'three';
-import { CSG } from '../libs/other/CSGMesh.js' 
 import {setMaterial,
         buildLowerTexture,
-        createThreeBasicWallRoom,
-        createFourBasicWallRoom,
-        updateObject,
         cut,
         createWall,
         createCutMesh,
-        createWallBasic,
         createFloor,
+        createWallComplex,
         createWallTextured,
         createGuardaCorpo} from './util/util.js'
 
@@ -22,7 +18,7 @@ export function buildC(color, location = null)
 {
    let material = setMaterial(null, color.cmat, 10, 3);
    // paredes principais verticais (em y)
-   let base = createWallTextured(14.6, 0.2, 3.5,   0, -0.1, 2.9,  material);
+   let base = createWallTextured(14.6, 0.2, 3.5,   -0.02, -0.1, 2.9,  material);
    let cut1 = createCutMesh(15, 0.3, 2.3);
    base = cut(base, cut1, 0.6, -0.1, 3.6, false);
    base = cut(base, cut1, 10.6, -0.1, 4.5, false);
@@ -38,7 +34,9 @@ export function createSecondFloor(color)
    let piscina = createCutMesh(3, 2, 2);
    floor = cut(floor, piscina, 11.5, 1, 3);
 
-   buildLowerTexture(secondFloor, 14.5, 19,  0, 0, 2.98,  color.secondFloorTeto, 3, 3)
+   let lowerPlane = buildLowerTexture(secondFloor, 14.5, 6,  0, 0, 2.98,  color.secondFloorTeto, 3, 3)
+   //lowerPlane = cut(floor, lowerPlane, 6.5, 6.1, 3);
+   secondFloor.add(lowerPlane)
 
    let stairHole = createCutMesh(3.5, 1.10, 2);
    floor = cut(floor, stairHole, 6.5, 6.1, 3);
@@ -62,7 +60,7 @@ export function createSecondFloor(color)
    wall = createWall('V', 19,   -0.01, 0, 3.20,  color.secondFloorWalls);
    let window1 = createCutMesh(1, 1, 1);
    let window2 = createCutMesh(1, 2, 1);
-   wall = cut(wall, window2, -0.5, 2.5, 4.5, false);
+   wall = cut(wall, window1, -0.5, 2.5, 4.5, false);
    wall = cut(wall, window1, -0.5, 6.75, 4.5, false);
    wall = cut(wall, window1, -0.5, 9, 4.5, false);
    wall = cut(wall, window1, -0.5, 11.25, 4.5, false);
@@ -97,12 +95,28 @@ export function createSecondFloor(color)
    //wall = cut(wall, smallWindow, 3.5, 1.50, 4.70, false); // porta sala
    secondFloor.add(wall); // wall 5
 
-   wall = createWall('V', 6.5,  2, 0.1, 3.20,  color.secondFloorWalls);
+   wall = createWall('V', 5,  2, 1.6, 3.20,  color.secondFloorWalls);
    wall = cut(wall, doorPV, 2, 5, 3.20, false);
-   secondFloor.add(wall); // wall 16 -- final do closet
+   secondFloor.add(wall); // wall 16 -- closet - interior
 
-   wall = createWall('H', 2,  0.1, 0.09, 3.20,  color.secondFloorWalls);
-   secondFloor.add(wall); // wall 17 -- final do closet (horizontal)
+   // wall = createWall('V', 6.5,  2, 0.1, 3.20,  color.secondFloorWalls);
+   // wall = cut(wall, doorPV, 2, 5, 3.20, false);
+   // secondFloor.add(wall); // wall 17 -- final do closet
+
+   // Second floor stone wall ------------------------------------------ 
+   let parede = setMaterial(color.secondFloorWalls)    
+   wall = createWallComplex('V', 1.5,  2, 0.1, 3.20,  
+   setMaterial(null, color.stonewallrot, 2, 2),parede,  // x+, x-
+   parede, parede, // y+, y-
+   parede, parede) // z+, z-
+   secondFloor.add(wall); // wall 17 -- final do closet
+
+   wall = createWallComplex('H', 2,  0.1, 0.09, 3.20,  
+   parede, parede, // x+, x-
+   parede, setMaterial(null, color.stonewall, 2, 2), // y+, y-
+   parede, parede) // z+, z-
+   secondFloor.add(wall); // wall 18 -- final do closet (horizontal)   
+   // -- End of Second floor stone wall -------------------------------
 
    wall = createWall('H' ,5,  0, 6.50, 3.20,  color.secondFloorWalls);
    wall = cut(wall, doorPH, 2.5, 6.50, 3.2, false); // porta suite

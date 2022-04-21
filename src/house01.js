@@ -23,6 +23,8 @@ var stats = new Stats();          // To show FPS information
 var scene = new THREE.Scene();    // Create main scene
 let clock = new THREE.Clock();
 var renderer = initRenderer();    // View function in util/utils
+   renderer.setClearColor(new THREE.Color(color.sky));
+
 renderer.setPixelRatio( window.devicePixelRatio );
 renderer.setSize( window.innerWidth, window.innerHeight );
 renderer.xr.enabled = true;
@@ -31,7 +33,7 @@ renderer.shadowMap.enabled = true;
 let flyMode = false;
 
 window.addEventListener( 'resize', function(){onWindowResize(camera, renderer)}, false );
-initDefaultBasicLight(scene, true, new THREE.Vector3(8, 8, 5), 100, 1024, 0.1, 200) ;	
+initDefaultBasicLight(scene, true, new THREE.Vector3(6, 6, 5), 100, 1024, 0.1, 200) ;	
 initDefaultBasicLight2(scene, new THREE.Vector3(0, -1, 0))
 var light = initDefaultSpotlight(scene, new THREE.Vector3(-10, -2, -2)); // Use default light
 //    light.target.position.y = 0.5
@@ -78,9 +80,18 @@ house.add(secondFloor);
 let thirdFloor = createThirdFloor(color);
 house.add(thirdFloor);
 
+// Color picker (default is hidden)
 let colorCube = createWall("H", 1,  13,-0.2, 0, "rgb(255,255,255)")
    colorCube.visible = false;
 house.add(colorCube)
+
+//-- CREATING THE EQUIRECTANGULAR MAP ---------------------------------------------------------------------
+const textureLoader = new THREE.TextureLoader();
+let textureEquirec = textureLoader.load( color.panorama );
+	textureEquirec.mapping = THREE.EquirectangularReflectionMapping; // Reflection as default
+	textureEquirec.encoding = THREE.sRGBEncoding;
+// Set scene's background as a equirectangular map
+scene.background = textureEquirec;
 
  // Rotate all house to Adjust VR view
 house.rotateX(degreesToRadians(-90))
