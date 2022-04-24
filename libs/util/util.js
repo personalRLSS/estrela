@@ -954,3 +954,5 @@ function computeNormalsGroup(group) {
         group.children.forEach(function(child) {computeNormalsGroup(child)});
     }
 }
+
+

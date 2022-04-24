@@ -2,6 +2,8 @@ import { CSG } from '../../libs/other/CSGMesh.js'
 import * as THREE from 'three';
 import {degreesToRadians} from "../../libs/util/util.js";
 
+export let doors = new THREE.Object3D();
+
 // Function to set basic material or textures
 // You can set just a color, just a texture or both
 export function setMaterial(color, file = null, repeatU = 1, repeatV = 1) {
@@ -201,8 +203,8 @@ export function updateObject(mesh)
    mesh.updateMatrix();
 }
 
-
-export function cut(base, cut, posx, posy, posz, receiveShadow = true, location = null)
+export function cut(base, cut, posx, posy, posz, receiveShadow,
+                    object = null, orientation = null, tex = null)
 {
    let auxMat = new THREE.Matrix4();
 
@@ -213,7 +215,7 @@ export function cut(base, cut, posx, posy, posz, receiveShadow = true, location 
    cut.position.set(posx+size.x/2, posy+size.y/2, posz+size.z/2)
    updateObject(cut) // update internal coords
 
-   if(location) location.add(cut); // For debugging
+   //if(location) location.add(cut); // For debugging
 
    // Execute subtraction
    let baseCSG = CSG.fromMesh(base)  
@@ -224,6 +226,12 @@ export function cut(base, cut, posx, posy, posz, receiveShadow = true, location 
    // Recover material
    output.material = base.material;
    output.receiveShadow = receiveShadow;
+
+   // Add object like a door, window etc
+   if(object)
+   {
+      addObject(object, orientation, posx, posy, posz, tex)
+   }
 
    return output;
 }
@@ -306,3 +314,31 @@ export function buildLowerTexture(
    //location.add(basePlane); 
    return basePlane;
 }
+
+export function addObject(door, orientation, movex, movey, movez, texture)
+{
+   var textureLoader = new THREE.TextureLoader();
+
+   var planeGeometry = new THREE.PlaneGeometry(door.l, door.a);  
+   var planeMaterial = new THREE.MeshLambertMaterial({side:THREE.DoubleSide});
+      planeMaterial.map = textureLoader.load(texture);   
+   var plane = new THREE.Mesh(planeGeometry, planeMaterial);
+     plane.receiveShadow = true;
+
+   var mat4 = new THREE.Matrix4();
+   plane.matrixAutoUpdate = false;
+   plane.matrix.identity();
+   // Will execute R2 (if applicable), R1 and then T1
+   if(orientation=='V')
+      plane.matrix.multiply(mat4.makeTranslation(movex, movey+door.l/2, movez+door.a/2)); // T1
+   else
+      plane.matrix.multiply(mat4.makeTranslation(movex+door.l/2, movey, movez+door.a/2)); // T1
+
+   plane.matrix.multiply(mat4.makeRotationX(degreesToRadians(90))); // R1   
+   if(orientation=='V')
+      plane.matrix.multiply(mat4.makeRotationY(degreesToRadians(90))); // R2
+   
+   doors.add(plane)
+}
+
+

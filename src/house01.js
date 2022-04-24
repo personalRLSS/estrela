@@ -14,7 +14,8 @@ import {initRenderer,
 import {createFirstFloor} from './firstFloor.js'
 import {createSecondFloor} from './secondFloor.js'
 import {createThirdFloor} from './thirdFloor.js'
-import {createWall} from './util/util.js'
+import {doors,
+        createWall} from './util/util.js'
 import {color} from "./util/settings.js";
 import { setVRMode,
          moveVR} from "./util/VRMode.js";
@@ -67,6 +68,9 @@ scene.add( axesHelper );
 var cameraVR = setVRMode(renderer, scene)
 
 let house = new THREE.Object3D();
+
+// To be able to hide all doors
+house.add(doors);
 
 //-- First Floor ---------------------------------------------
 let firstFloor = createFirstFloor(color);
@@ -127,6 +131,7 @@ function buildInterface()
    gui.add(controls, 'flyMode', true)
       .onChange(function() { controls.onFlyMode() })
       .name("Fly Mode");  
+   gui.add(doors, 'visible', true).name("Doors");
    gui.add(firstFloor, 'visible', true).name("First Floor");
    gui.add(secondFloor, 'visible', true).name("Second Floor");
    gui.add(thirdFloor, 'visible', true).name("Third Floor");

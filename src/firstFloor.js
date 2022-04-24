@@ -74,11 +74,12 @@ export function createFirstFloor(color)
 
    wall = createWallComplex('V', 6.25,   10.8,  -0.04, 0,  
    setMaterial(null, color.stonewallrot, 2, 3))
-   wall = cut(wall, doorGV, 10.8, 4, 0, false);
+   wall = cut(wall, doorGV, 10.8, 4, 0, false, doorMain, 'V', color.door);
    firstFloor.add(wall)
 
    wall = createWall('H', 10.9,   0.1, 6, 0,  color.garageWalls)
-   wall = cut(wall, doorGH, 1, 5.9, 0, false);
+   wall = cut(wall, doorGH, 1, 6, 0, false, doorMain, 'H', color.door);
+   //addDoor(doorMain, 'H', 1, 6, 0, color.door)
    firstFloor.add(wall)
 
    createWall('V', 12,  0, 0, 0,  color.garageWalls, firstFloor)
