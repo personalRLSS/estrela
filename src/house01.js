@@ -97,6 +97,13 @@ let textureEquirec = textureLoader.load( color.panorama );
 // Set scene's background as a equirectangular map
 scene.background = textureEquirec;
 
+/* 
+   ------------------------------------------------------------
+   IMPORTANTE!!!!
+   Tudo foi criado considerando Z para cima, mas para VR
+   tem que ser Y para cima. Então, ao final, tudo é rotacionado em X em 90°
+   -----------------------------------------------------------
+ */
  // Rotate all house to Adjust VR view
 house.rotateX(degreesToRadians(-90))
 scene.add(house)

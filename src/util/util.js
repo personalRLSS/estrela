@@ -2,6 +2,11 @@ import { CSG } from '../../libs/other/CSGMesh.js'
 import * as THREE from 'three';
 import {degreesToRadians} from "../../libs/util/util.js";
 
+import { door,
+   doorVidro,
+   doorMain,
+   smallWindow50x70} from './settings.js'
+
 export let doors = new THREE.Object3D();
 
 // Function to set basic material or textures
@@ -228,11 +233,14 @@ export function cut(base, cut, posx, posy, posz, receiveShadow,
    output.receiveShadow = receiveShadow;
 
    // Add object like a door, window etc
-   if(object)
-   {
+   if(object == door || object == doorMain)
       addObject(object, orientation, posx, posy, posz, tex)
-   }
+   if(object == doorVidro)
+      console.log("Falta fazer")
 
+   // No 'builder.js' já há um esboço de como criar portas e 
+   // janelas de vidro. Tem que adaptar para cá
+   
    return output;
 }
 
