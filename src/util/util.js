@@ -235,8 +235,8 @@ export function cut(base, cut, posx, posy, posz, receiveShadow,
    // Add object like a door, window etc
    if(object == door || object == doorMain)
       addObject(object, orientation, posx, posy, posz, tex)
-   if(object == doorVidro)
-      console.log("Falta fazer")
+   if(object == smallWindow50x70)
+      addWindow(object, orientation, posx, posy, posz, tex)
 
    // No 'builder.js' já há um esboço de como criar portas e 
    // janelas de vidro. Tem que adaptar para cá
@@ -349,4 +349,23 @@ export function addObject(door, orientation, movex, movey, movez, texture)
    doors.add(plane)
 }
 
+export function addWindow(window, orientation, movex, movey, movez, texture)
+{
+   var planeGeometry = new THREE.PlaneGeometry(window.l, window.a);  
+   var plane = new THREE.Mesh(planeGeometry, new THREE.MeshLambertMaterial({side:THREE.DoubleSide,color:"rgb(50,50,50)", transparent: true, opacity: 0.5}))
 
+   var mat4 = new THREE.Matrix4();
+   plane.matrixAutoUpdate = false;
+   plane.matrix.identity();
+   // Will execute R2 (if applicable), R1 and then T1
+   if(orientation=='V') // Tem que remover esse '0.5' depois....
+      plane.matrix.multiply(mat4.makeTranslation(movex+0.5, movey+window.l/2, movez+window.a/2)); // T1
+   else
+      plane.matrix.multiply(mat4.makeTranslation(movex+window.l/2, movey, movez+window.a/2)); // T1
+
+   plane.matrix.multiply(mat4.makeRotationX(degreesToRadians(90))); // R1   
+   if(orientation=='V')
+      plane.matrix.multiply(mat4.makeRotationY(degreesToRadians(90))); // R2
+   
+   doors.add(plane)
+}

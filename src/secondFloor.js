@@ -53,14 +53,16 @@ export function createSecondFloor(color)
    let doorGV = createCutMesh(doorMain.p, doorMain.l, doorMain.a);
    let doorPH = createCutMesh(door.l, door.p, door.a);
    let doorPV = createCutMesh(door.p, door.l, door.a);
-   let smallWindow = createCutMesh(smallWindow50x70.l, smallWindow50x70.p, smallWindow50x70.a);
+   let window1 = createCutMesh(smallWindow50x70.p, smallWindow50x70.l, smallWindow50x70.a)
 
    // paredes principais verticais (em y)
    let wall
    wall = createWall('V', 19,   -0.01, 0, 3.20,  color.secondFloorWalls);
-   let window1 = createCutMesh(1, 1, 1);
+   //let window1 = createCutMesh(1, 1, 1);
    let window2 = createCutMesh(1, 2, 1);
-   wall = cut(wall, window1, -0.5, 2.5, 4.5, false);
+
+   /* TODO - FINALIZAR A INCLUSÃO DAS OUTRAS JANELAS */
+   wall = cut(wall, window1, -0.5, 2.5, 4.5, false, smallWindow50x70, 'V');
    wall = cut(wall, window1, -0.5, 6.75, 4.5, false);
    wall = cut(wall, window1, -0.5, 9, 4.5, false);
    wall = cut(wall, window1, -0.5, 11.25, 4.5, false);
@@ -70,7 +72,6 @@ export function createSecondFloor(color)
 
    wall = createWall('V', 17.5,  5, 1.50, 3.20,  color.secondFloorWalls);
    wall = cut(wall, doorPV, 5, 5.2, 3.20, false, door, 'V', color.door);
-   //addDoor(door, 'V', 5, 5.2, 3.20, color.door)
 
    //wall = cut(wall, doorPV, 5, 6.75, 3.20, false);
    wall = cut(wall, doorPV, 5, 9, 3.20, false, door, 'V', color.door);

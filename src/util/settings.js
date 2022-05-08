@@ -49,7 +49,7 @@ function doorVidroSettings() {
 
 function smallWindow50x70Settings() {
    this.l = 0.80
-   this.p = 0.40
+   this.p = 0.60
    this.a = 0.60 
 }
 

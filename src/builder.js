@@ -51,7 +51,17 @@ animate();
 function builder()
 {
    let geometry = new THREE.BoxGeometry(10, 0.10, 10).toNonIndexed();
-   let cutBox = new THREE.BoxGeometry(9.5, 2, 9.5);
+
+  // let box = new THREE.Box3().setFromObject( geometry );
+  // let size = new THREE.Vector3();
+   // let size = geometry.width;
+   geometry.computeBoundingBox()
+   let x = geometry.boundingBox.max.x - geometry.boundingBox.min.x
+   let z = geometry.boundingBox.max.z - geometry.boundingBox.min.z
+   console.log(x)
+   let esquadria = 0.5
+
+   let cutBox = new THREE.BoxGeometry(x - esquadria, 2, z - esquadria);
    //cut.translate(moveX+sizeX/2.0, moveY+sizeY/2.0, moveZ+sizeZ/2.0); // To avoid conflict with the axeshelper
    let obj = new THREE.Mesh(geometry);
    let cutMesh = new THREE.Mesh(cutBox);
