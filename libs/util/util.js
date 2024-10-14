@@ -483,6 +483,25 @@ export function createGroundPlane(width, height, widthSegments = 10, heightSegme
   return plane;
 }
 
+export function createGroundPlaneXZ(width, height, widthSegments = 10, heightSegments = 10, x = 0, y = 0, z = 0) {
+   //if (!gcolor) gcolor = "rgb(200,200,200)";
+   let planeGeometry = new THREE.PlaneGeometry(width, height, widthSegments, heightSegments);
+   //let planeMaterial = new THREE.MeshLambertMaterial({ side: THREE.DoubleSide });
+
+   let mat4 = new THREE.Matrix4(); // Aux mat4 matrix   
+   let plane = new THREE.Mesh(planeGeometry);
+   plane.receiveShadow = true;
+   // Rotate 90 in X and perform a small translation in Y
+   plane.matrixAutoUpdate = false;
+   plane.matrix.identity();    // resetting matrices
+   // Will execute R1 and then T1
+   plane.matrix.multiply(mat4.makeTranslation(x, y, z)); // T1   
+   plane.matrix.multiply(mat4.makeRotationX(degreesToRadians(-90))); // R1   
+
+   return plane;
+}
+
+
 /**
  * Create a ground plane that has a wireframe over it
  */

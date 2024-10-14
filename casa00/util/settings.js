@@ -15,7 +15,7 @@ export function colorPresetLight() {
    this.thirdFloorMat = './assets/cement.jpg'
    this.cmat = './assets/porcelanatoC.png'
    this.bronze = 'rgb(128,74,1)'//'rgb(180,100,30)'
-   this.panorama = './assets/panorama3.jpg'
+   this.panorama = './assets/panorama4.jpg'
    this.stonewall = './assets/stonewall.jpg'
    this.stonewallrot = './assets/stonewallrot.jpg'  // for vertical walls
    this.sky = 'rgb(130, 180, 240)'
