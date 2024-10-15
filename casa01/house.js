@@ -224,7 +224,7 @@ function render()
   }
   else
   {
-     moveVR(); 
+     moveVR( flyCamera.movementSpeed); 
      renderer.render(scene, cameraVR) // Render scene
   }
 }
