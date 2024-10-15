@@ -195,7 +195,7 @@ function buildInterface()
       .onChange(function() { controls.onFlyMode() })
       .name("Fly Mode"); 
    gui.add(controls, 'speed', 0.01, 1.0)
-      .name("Light Speed")
+      .name("Fly Speed")
       .onChange(function(e) { controls.onUpdateSpeed() });       
 }
 
