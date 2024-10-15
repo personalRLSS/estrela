@@ -197,13 +197,6 @@ function buildInterface()
    gui.add(controls, 'speed', 0.01, 1.0)
       .name("Light Speed")
       .onChange(function(e) { controls.onUpdateSpeed() });       
-   // gui.add(doors, 'visible', true).name("Doors");
-   // gui.add(firstFloor, 'visible', true).name("First Floor");
-   // gui.add(secondFloor, 'visible', true).name("Second Floor");
-   // gui.add(thirdFloor, 'visible', true).name("Third Floor");
-   // if(colorCube.visible)
-   //    gui.addColor(params, 'color').onChange(function(value) {
-   //       colorCube.material.color.set(value)});
 }
 
 //-- Main loop -----------------------------------------------------------------------------------
