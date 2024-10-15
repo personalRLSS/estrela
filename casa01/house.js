@@ -175,24 +175,28 @@ function fixPosition(obj)
 
 function buildInterface()
 {
-   const params = {
-      color: "rgb(255,0,0)"
-    };
-   
+ 
    // Interface
    var controls = new function ()
    {
+      this.speed = flyCamera.movementSpeed;      
       this.flyMode = false;
 
       this.onFlyMode = function(){
          flyMode = this.flyMode;
       };
+      this.onUpdateSpeed = function(){
+         flyCamera.movementSpeed = this.speed;
+       };      
    }; 
 
    var gui = new GUI();
    gui.add(controls, 'flyMode', true)
       .onChange(function() { controls.onFlyMode() })
-      .name("Fly Mode");  
+      .name("Fly Mode"); 
+   gui.add(controls, 'speed', 0.01, 1.0)
+      .name("Light Speed")
+      .onChange(function(e) { controls.onUpdateSpeed() });       
    // gui.add(doors, 'visible', true).name("Doors");
    // gui.add(firstFloor, 'visible', true).name("First Floor");
    // gui.add(secondFloor, 'visible', true).name("Second Floor");
