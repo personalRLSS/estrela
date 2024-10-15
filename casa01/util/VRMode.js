@@ -38,7 +38,7 @@ export function moveVR(speed)
 		quaternion = cameraVR.quaternion;
 
 		// Get direction to translate from quaternion
-		var moveTo = new THREE.Vector3(0.0, 0.0, -speed);
+		var moveTo = new THREE.Vector3(0.0, 0.0, -speed/10);
 		moveTo.applyQuaternion(quaternion);
 
 		// Move the camera Holder to the computed direction
