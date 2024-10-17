@@ -1,5 +1,5 @@
-import * as THREE from '../../build/three.module.js';
-import { FlyControls } from '../../build/jsm/controls/FlyControls.js';
+import * as THREE from '../build/three.module.js';
+import { FlyControls } from '../build/jsm/controls/FlyControls.js';
 import { InfoBox } from "./util.js";
 
 function showMessages(message1, message2)

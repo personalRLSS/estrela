@@ -1,6 +1,6 @@
 // VR
 import * as THREE from 'three';
-import { VRButton } from '../../build/jsm/webxr/VRButton.js';
+import { VRButton } from '../build/jsm/webxr/VRButton.js';
 import {setFlyNonVRBehavior} from "./utilVR.js";
 
 let moveCamera; // Move when a button is pressed 

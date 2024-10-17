@@ -2,24 +2,24 @@
 
 export function colorPresetLight() {
    let parede = 'rgb(253,235,208)'
-   this.garageWalls = parede
-   this.basePlaneTexture = './assets/intertravado.jpg'
-   this.garageFloorTexture = './assets/paper.png'
-   this.gesso = './assets/gesso.jpg'
-   this.sand = './assets/sand.jpg'
-   this.floorSides = parede
-   this.secondFloorWalls = parede
-   this.secondFloorTeto = './assets/teto.jpg'
-   this.grass = './assets/grass.jpg'
-   this.secondFloorMat = './assets/wood.png'
-   this.thirdFloorMat = './assets/cement.jpg'
-   this.cmat = './assets/porcelanatoC.png'
-   this.bronze = 'rgb(128,74,1)'//'rgb(180,100,30)'
+   // this.garageWalls = parede
+   this.basePlaneTexture = '../assets/intertravado.jpg'
+   // this.garageFloorTexture = '../assets/paper.png'
+   // this.gesso = '../assets/gesso.jpg'
+   // this.sand = '../assets/sand.jpg'
+   // this.floorSides = parede
+   // this.secondFloorWalls = parede
+   // this.secondFloorTeto = '../assets/teto.jpg'
+   // this.grass = '../assets/grass.jpg'
+   // this.secondFloorMat = './assets/wood.png'
+   // this.thirdFloorMat = './assets/cement.jpg'
+   // this.cmat = './assets/porcelanatoC.png'
+   // this.bronze = 'rgb(128,74,1)'//'rgb(180,100,30)'
    this.panorama = './assets/panorama4.jpg'
-   this.stonewall = './assets/stonewall.jpg'
-   this.stonewallrot = './assets/stonewallrot.jpg'  // for vertical walls
-   this.sky = 'rgb(130, 180, 240)'
-   this.door = './assets/door01.jpg'
+   // this.stonewall = './assets/stonewall.jpg'
+   // this.stonewallrot = './assets/stonewallrot.jpg'  // for vertical walls
+   // this.sky = 'rgb(130, 180, 240)'
+   // this.door = './assets/door01.jpg'
 }
 
 export function colorPresetDark() 
