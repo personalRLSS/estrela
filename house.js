@@ -11,13 +11,13 @@ import {initRenderer,
    setMaterial,
    createGroundPlaneXZ} from './util/util.js';
 import GUI from './util/dat.gui.module.js';
-import {color} from "./util/settings.js";
+//import {color} from "./util/settings.js";
 import { setVRMode,
          moveVR} from "./util/VRMode.js";
 var scene = new THREE.Scene();    // Create main scene
 let clock = new THREE.Clock();
 var renderer = initRenderer();    // View function in util/utils
-   renderer.setClearColor(new THREE.Color(color.sky));
+   renderer.setClearColor(new THREE.Color('rgb(130, 180, 240)'));
 
 renderer.setPixelRatio( window.devicePixelRatio );
 renderer.setSize( window.innerWidth, window.innerHeight );
@@ -60,9 +60,24 @@ scene.add( axesHelper );
 // VR Camera
 var cameraVR = setVRMode(renderer, scene)
 
+
+// this.basePlaneTexture = './assets/intertravado.jpg'
+// // this.garageFloorTexture = '../assets/paper.png'
+// // this.gesso = '../assets/gesso.jpg'
+// // this.sand = '../assets/sand.jpg'
+// // this.floorSides = parede
+// // this.secondFloorWalls = parede
+// // this.secondFloorTeto = '../assets/teto.jpg'
+// // this.grass = '../assets/grass.jpg'
+// // this.secondFloorMat = './assets/wood.png'
+// // this.thirdFloorMat = './assets/cement.jpg'
+// // this.cmat = './assets/porcelanatoC.png'
+// // this.bronze = 'rgb(128,74,1)'//'rgb(180,100,30)'
+// this.panorama = './assets/panorama4.jpg'
+
 // create base plan
 let basePlane = createGroundPlaneXZ(10, 10, 10, 10, 0, -0.01, 0.5)
-    basePlane.material = setMaterial(null,color.basePlaneTexture, 15, 15);
+    basePlane.material = setMaterial(null,'./assets/intertravado.jpg', 15, 15);
 scene.add(basePlane);
 
 // let groundPlane = createGroundPlaneXZ(5, 5, 10, 10, 0, -0.02, 0.5)
@@ -72,7 +87,7 @@ scene.add(basePlane);
 
 //-- CREATING THE EQUIRECTANGULAR MAP ---------------------------------------------------------------------
 const textureLoader = new THREE.TextureLoader();
-let textureEquirec = textureLoader.load( color.panorama );
+let textureEquirec = textureLoader.load( './assets/panorama4.jpg' );
 	textureEquirec.mapping = THREE.EquirectangularReflectionMapping; // Reflection as default
 	textureEquirec.encoding = THREE.sRGBEncoding;
 // Set scene's background as a equirectangular map
