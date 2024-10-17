@@ -1,16 +1,8 @@
 import * as THREE from 'three';
-import {TrackballControls} from '../build/jsm/controls/TrackballControls.js';
-import { FlyControls } from '../build/jsm/controls/FlyControls.js';
-// import {initRenderer, 
-//         initDefaultBasicLight,
-//         InfoBox,
-//         onWindowResize,
-//         setMaterial,
-//         getMaxSize,
-//         createGroundPlaneXZ} from "../libs/util/util.js";
-import {OBJLoader} from '../build/jsm/loaders/OBJLoader.js';
-import {MTLLoader} from '../build/jsm/loaders/MTLLoader.js';
-
+import {TrackballControls} from './build/jsm/controls/TrackballControls.js';
+import {FlyControls} from './build/jsm/controls/FlyControls.js';
+import {OBJLoader} from './build/jsm/loaders/OBJLoader.js';
+import {MTLLoader} from './build/jsm/loaders/MTLLoader.js';
 import {initRenderer, 
    initDefaultBasicLight,
    InfoBox,
@@ -19,12 +11,9 @@ import {initRenderer,
    setMaterial,
    createGroundPlaneXZ} from './util/util.js';
 import GUI from './util/dat.gui.module.js';
-//import { setMaterial } from './util/util.js'
 import {color} from "./util/settings.js";
 import { setVRMode,
          moveVR} from "./util/VRMode.js";
-
-//var stats = new Stats();          // To show FPS information
 var scene = new THREE.Scene();    // Create main scene
 let clock = new THREE.Clock();
 var renderer = initRenderer();    // View function in util/utils
