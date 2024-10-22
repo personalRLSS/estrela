@@ -17,6 +17,7 @@ var scene = new THREE.Scene();    // Create main scene
 let clock = new THREE.Clock();
 var renderer = initRenderer();    // View function in util/utils
 
+renderer.outputEncoding = THREE.sRGBEncoding;
 renderer.setPixelRatio( window.devicePixelRatio );
 renderer.setSize( window.innerWidth, window.innerHeight );
 renderer.xr.enabled = true;
@@ -25,7 +26,7 @@ renderer.shadowMap.enabled = true;
 let flyMode = false;
 
 window.addEventListener( 'resize', function(){onWindowResize(camera, renderer)}, false );
-initDefaultBasicLight(scene, true, new THREE.Vector3(15, 35, 25), 100, 1024, 0.1, 400, 1.2) ;	
+initDefaultBasicLight(scene, true, new THREE.Vector3(15, 35, 25), 100, 1024, 0.1, 400, 0.8) ;	
 
 // Secondary light
 let secLight = new THREE.DirectionalLight('white', 0.2);
@@ -36,12 +37,12 @@ scene.add(secLight);
 // //    light.target.position.y = 0.5
 // // Main camera
 let camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.01, 1000);
-  camera.position.set(2, 1, 3);    
+  camera.position.set(1.5, 0.8, 3);    
   camera.up.set( 0, 1, 0 );
 
 // Main camera
 let cameraFly = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.01, 1000);
-  cameraFly.position.set(2, 1, 3);    
+  cameraFly.position.copy(camera.position);    
   cameraFly.up.set( 0, 1, 0 );
 
   // Enable mouse rotation, pan, zoom etc.
@@ -105,7 +106,10 @@ function loadOBJFile(modelPath, modelName, visibility, desiredScale)
                child.castShadow = true;
                //child.receiveShadow = true;               
             }
-            if( child.material ) child.material.side = THREE.DoubleSide; 
+            if( child.material ) 
+            {
+               child.material.side = THREE.DoubleSide; 
+            }
          });
 
          var obj = normalizeAndRescale(obj, desiredScale);
@@ -131,11 +135,14 @@ function fixPosition(obj)
 {
   // Fix position of the object over the ground plane
   var box = new THREE.Box3().setFromObject( obj );
+  console.log("Mínimo:" + box.max.x);
   if(box.min.y > 0)
     obj.translateY(-box.min.y);
   else
     obj.translateY(-1*box.min.y);
-  return obj;
+   obj.translateX(-box.max.x/2);
+   obj.translateZ(-box.max.z/2);   
+   return obj;
 }
 
 
