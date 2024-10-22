@@ -11,13 +11,11 @@ import {initRenderer,
    setMaterial,
    createGroundPlaneXZ} from './util/util.js';
 import GUI from './util/dat.gui.module.js';
-//import {color} from "./util/settings.js";
 import { setVRMode,
          moveVR} from "./util/VRMode.js";
 var scene = new THREE.Scene();    // Create main scene
 let clock = new THREE.Clock();
 var renderer = initRenderer();    // View function in util/utils
-   renderer.setClearColor(new THREE.Color('rgb(130, 180, 240)'));
 
 renderer.setPixelRatio( window.devicePixelRatio );
 renderer.setSize( window.innerWidth, window.innerHeight );
@@ -27,9 +25,12 @@ renderer.shadowMap.enabled = true;
 let flyMode = false;
 
 window.addEventListener( 'resize', function(){onWindowResize(camera, renderer)}, false );
-initDefaultBasicLight(scene, true, new THREE.Vector3(6, 25, 35), 100, 1024, 0.1, 400, 0.4) ;	
-initDefaultBasicLight(scene, false, new THREE.Vector3(0, 50, 0), 100, 1024, 0.1, 400, 0.2) ;	
+initDefaultBasicLight(scene, true, new THREE.Vector3(15, 35, 25), 100, 1024, 0.1, 400, 1.2) ;	
 
+// Secondary light
+let secLight = new THREE.DirectionalLight('white', 0.2);
+   secLight.position.copy(new THREE.Vector3(-10, 50, -30));
+scene.add(secLight);
 
 // var light = initDefaultSpotlight(scene, new THREE.Vector3(-10, -2, -2)); // Use default light
 // //    light.target.position.y = 0.5
@@ -47,7 +48,7 @@ let cameraFly = new THREE.PerspectiveCamera(45, window.innerWidth / window.inner
 let trackballControls = new TrackballControls( camera, renderer.domElement );
 
 let flyCamera = new FlyControls( cameraFly, renderer.domElement );
-   flyCamera.movementSpeed = 1;
+   flyCamera.movementSpeed = 0.5;
    flyCamera.domElement = renderer.domElement;
    flyCamera.rollSpeed = 0.2;
 
@@ -60,34 +61,14 @@ scene.add( axesHelper );
 // VR Camera
 var cameraVR = setVRMode(renderer, scene)
 
-
-// this.basePlaneTexture = './assets/intertravado.jpg'
-// // this.garageFloorTexture = '../assets/paper.png'
-// // this.gesso = '../assets/gesso.jpg'
-// // this.sand = '../assets/sand.jpg'
-// // this.floorSides = parede
-// // this.secondFloorWalls = parede
-// // this.secondFloorTeto = '../assets/teto.jpg'
-// // this.grass = '../assets/grass.jpg'
-// // this.secondFloorMat = './assets/wood.png'
-// // this.thirdFloorMat = './assets/cement.jpg'
-// // this.cmat = './assets/porcelanatoC.png'
-// // this.bronze = 'rgb(128,74,1)'//'rgb(180,100,30)'
-// this.panorama = './assets/panorama4.jpg'
-
 // create base plan
 let basePlane = createGroundPlaneXZ(10, 10, 10, 10, 0, -0.01, 0.5)
     basePlane.material = setMaterial(null,'./assets/intertravado.jpg', 15, 15);
 scene.add(basePlane);
 
-// let groundPlane = createGroundPlaneXZ(5, 5, 10, 10, 0, -0.02, 0.5)
-//     groundPlane.material = setMaterial(null,color.sand, 15, 15);
-// scene.add(groundPlane);
-
-
 //-- CREATING THE EQUIRECTANGULAR MAP ---------------------------------------------------------------------
 const textureLoader = new THREE.TextureLoader();
-let textureEquirec = textureLoader.load( './assets/panorama4.jpg' );
+let textureEquirec = textureLoader.load( './assets/panorama.jpg' );
 	textureEquirec.mapping = THREE.EquirectangularReflectionMapping; // Reflection as default
 	textureEquirec.encoding = THREE.sRGBEncoding;
 // Set scene's background as a equirectangular map
@@ -100,7 +81,7 @@ var controls = new InfoBox();
   controls.add("Use mouse to interact:");
 
 
-loadOBJFile('./sweetHomeExport/', 'layout13', true, 2.0);
+loadOBJFile('./casaObj/', 'layout', true, 2.0);
 
 buildInterface();
 animate();
