@@ -82,7 +82,7 @@ var controls = new InfoBox();
   controls.add("Use mouse to interact:");
 
 
-loadOBJFile('./casaObj/', 'layout', true, 2.0);
+loadOBJFile('./casaObj/', 'layout3', true, 2.0);
 
 buildInterface();
 animate();
