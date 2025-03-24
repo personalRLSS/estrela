@@ -13,6 +13,15 @@ import {initRenderer,
 import GUI from './util/dat.gui.module.js';
 import { setVRMode,
          moveVR} from "./util/VRMode.js";
+
+//-- MUDAR AQUI, PRINCIPALMENTE O layout ----------------------------------
+
+var path = './casaObj/';
+var layout = 'layout4';
+
+//-------------------------------------------------------------------------
+
+
 var scene = new THREE.Scene();    // Create main scene
 let clock = new THREE.Clock();
 var renderer = initRenderer();    // View function in util/utils
@@ -82,7 +91,7 @@ var controls = new InfoBox();
   controls.add("Use mouse to interact:");
 
 
-loadOBJFile('./casaObj/', 'layout3', true, 2.0);
+loadOBJFile(path, layout, true, 2.0);
 
 buildInterface();
 animate();
