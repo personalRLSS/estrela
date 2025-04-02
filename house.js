@@ -70,6 +70,7 @@ scene.add( axesHelper );
 
 // VR Camera
 var cameraVR = setVRMode(renderer, scene)
+    cameraVR.position.copy(camera.position);
 
 // create base plan
 let basePlane = createGroundPlaneXZ(10, 10, 10, 10, 0, -0.01, 0.5)
@@ -166,6 +167,10 @@ function buildInterface()
 
       this.onFlyMode = function(){
          flyMode = this.flyMode;
+         if(flyMode)
+            axesHelper.visible = false;
+         else
+            axesHelper.visible = true;        
       };
       this.onUpdateSpeed = function(){
          flyCamera.movementSpeed = this.speed;
