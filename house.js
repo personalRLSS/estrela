@@ -12,7 +12,8 @@ import {initRenderer,
    createGroundPlaneXZ} from './util/util.js';
 import GUI from './util/dat.gui.module.js';
 import { setVRMode,
-         moveVR} from "./util/VRMode.js";
+         moveVR,
+         updateCameraPosition} from "./util/VRMode.js";
 
 //-- MUDAR AQUI, PRINCIPALMENTE O layout ----------------------------------
 
@@ -45,17 +46,18 @@ scene.add(secLight);
 // var light = initDefaultSpotlight(scene, new THREE.Vector3(-10, -2, -2)); // Use default light
 // //    light.target.position.y = 0.5
 // // Main camera
-let camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.01, 1000);
-  camera.position.set(1.5, 0.8, 3);    
-  camera.up.set( 0, 1, 0 );
+// let camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.01, 1000);
+//   camera.position.set(1.5, 0.8, 3);    
+//   camera.up.set( 0, 1, 0 );
 
 // Main camera
 let cameraFly = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.01, 1000);
-  cameraFly.position.copy(camera.position);    
+  //cameraFly.position.copy(camera.position); 
+  cameraFly.position.set(1.5, 0.8, 3);
   cameraFly.up.set( 0, 1, 0 );
 
   // Enable mouse rotation, pan, zoom etc.
-let trackballControls = new TrackballControls( camera, renderer.domElement );
+let trackballControls = new TrackballControls( cameraFly, renderer.domElement );
 
 let flyCamera = new FlyControls( cameraFly, renderer.domElement );
    flyCamera.movementSpeed = 0.5;
@@ -66,11 +68,23 @@ let flyCamera = new FlyControls( cameraFly, renderer.domElement );
 var axesHelper = new THREE.AxesHelper( 7 );
 scene.add( axesHelper );
 
+
+// Create the loading manager
+const manager = new THREE.LoadingManager( () => {
+   const loadingScreen = document.getElementById( 'loading-screen' );
+   loadingScreen.classList.add( 'fade-out' );
+   loadingScreen.addEventListener( 'transitionend', (e) => {
+     const element = e.target;
+     element.remove();  
+   });  
+ });
+
 //-- Create VR button and settings ---------------------------------------------------------------
 
 // VR Camera
-var cameraVR = setVRMode(renderer, scene, camera)
+var cameraVR = setVRMode(renderer, scene, cameraFly)
     //cameraVR.position.copy(camera.position);
+
 
 // create base plan
 let basePlane = createGroundPlaneXZ(10, 10, 10, 10, 0, -0.01, 0.5)
@@ -99,12 +113,12 @@ animate();
 
 function loadOBJFile(modelPath, modelName, visibility, desiredScale)
 {
-  var mtlLoader = new MTLLoader( );
+  var mtlLoader = new MTLLoader( manager );
   mtlLoader.setPath( modelPath );
   mtlLoader.load( modelName + '.mtl', function ( materials ) {
       materials.preload();
 
-      var objLoader = new OBJLoader( );
+      var objLoader = new OBJLoader( manager );
       objLoader.setMaterials(materials);
       objLoader.setPath(modelPath);
       objLoader.load( modelName + ".obj", function ( obj ) {
@@ -127,8 +141,8 @@ function loadOBJFile(modelPath, modelName, visibility, desiredScale)
 
          scene.add ( obj );
          //assetManager[modelName] = obj;
-      });
-  });
+      }, null, null);
+  }, null, null);
 }
 
 // Normalize scale and multiple by the newScale
@@ -192,12 +206,15 @@ function animate()
 	renderer.setAnimationLoop( render );
 }
 
+let justEntered = true;
 function render()
 {
   //stats.update(); // Update FPS
 
    if(!renderer.xr.isPresenting)
    {
+      if(!justEntered)
+         justEntered = true;
       if(flyMode)
       {
          flyCamera.update(clock.getDelta()); 
@@ -206,11 +223,17 @@ function render()
       else
       {
          trackballControls.update(); // Enable mouse movements
-         renderer.render(scene, camera) // Render scene
+         renderer.render(scene, cameraFly) // Render scene
       }
   }
   else
   {
+     if(justEntered)
+     {
+        updateCameraPosition(cameraFly)
+        flyCamera.movementSpeed = 0.2;
+        justEntered = false;
+     }
      moveVR( flyCamera.movementSpeed); 
      renderer.render(scene, cameraVR) // Render scene
   }

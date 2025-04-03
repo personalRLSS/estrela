@@ -13,8 +13,8 @@ export function setVRMode(renderer, scene, camera = null)
 
    //-- 'Camera Holder' to help moving the camera
    cameraHolder = new THREE.Object3D();
-      //cameraHolder.position.set(0, 1.5, 5.0);
-      cameraHolder.position.copy(camera.position);      
+     // cameraHolder.position.set(0, 0, 10.0);
+      cameraHolder.position.set(camera.position.x-0.6, camera.position.y-1.60, camera.position.z-0.9);      
    cameraHolder.add(cameraVR);
    scene.add( cameraHolder );
    
@@ -47,6 +47,12 @@ export function moveVR(speed, camera = null)
 		cameraHolder.translateY(moveTo.y);
 		cameraHolder.translateZ(moveTo.z);
 	}
+}
+
+export function updateCameraPosition(camera)
+{
+   cameraHolder.position.set(camera.position.x-0.6, camera.position.y-1.60, camera.position.z-0.9);     
+   //cameraHolder.position.copy(camera.position);
 }
 
 function onSelectStart( ) 
