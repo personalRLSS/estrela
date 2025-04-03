@@ -35,20 +35,12 @@ renderer.shadowMap.enabled = true;
 
 let flyMode = false;
 
-window.addEventListener( 'resize', function(){onWindowResize(camera, renderer)}, false );
 initDefaultBasicLight(scene, true, new THREE.Vector3(15, 35, 25), 100, 1024, 0.1, 400, 0.8) ;	
 
 // Secondary light
 let secLight = new THREE.DirectionalLight('white', 0.2);
    secLight.position.copy(new THREE.Vector3(-10, 50, -30));
 scene.add(secLight);
-
-// var light = initDefaultSpotlight(scene, new THREE.Vector3(-10, -2, -2)); // Use default light
-// //    light.target.position.y = 0.5
-// // Main camera
-// let camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.01, 1000);
-//   camera.position.set(1.5, 0.8, 3);    
-//   camera.up.set( 0, 1, 0 );
 
 // Main camera
 let cameraFly = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.01, 1000);
@@ -68,6 +60,7 @@ let flyCamera = new FlyControls( cameraFly, renderer.domElement );
 var axesHelper = new THREE.AxesHelper( 7 );
 scene.add( axesHelper );
 
+window.addEventListener( 'resize', function(){onWindowResize(cameraFly, renderer)}, false );
 
 // Create the loading manager
 const manager = new THREE.LoadingManager( () => {
