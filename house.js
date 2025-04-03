@@ -226,6 +226,7 @@ function render()
         updateCameraPosition(cameraFly)
         flyCamera.movementSpeed = 0.2;
         justEntered = false;
+        axesHelper.visible = false;
      }
      moveVR( flyCamera.movementSpeed); 
      renderer.render(scene, cameraVR) // Render scene
