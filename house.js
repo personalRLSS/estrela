@@ -69,8 +69,8 @@ scene.add( axesHelper );
 //-- Create VR button and settings ---------------------------------------------------------------
 
 // VR Camera
-var cameraVR = setVRMode(renderer, scene)
-    cameraVR.position.copy(camera.position);
+var cameraVR = setVRMode(renderer, scene, camera)
+    //cameraVR.position.copy(camera.position);
 
 // create base plan
 let basePlane = createGroundPlaneXZ(10, 10, 10, 10, 0, -0.01, 0.5)

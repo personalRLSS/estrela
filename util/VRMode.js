@@ -7,13 +7,14 @@ let moveCamera; // Move when a button is pressed
 let cameraHolder;
 let cameraVR;
 
-export function setVRMode(renderer, scene)
+export function setVRMode(renderer, scene, camera = null)
 {
    cameraVR = new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, .1, 1000 );
 
    //-- 'Camera Holder' to help moving the camera
    cameraHolder = new THREE.Object3D();
-      cameraHolder.position.set(0, 1.5, 5.0);
+      //cameraHolder.position.set(0, 1.5, 5.0);
+      cameraHolder.position.copy(camera.position);      
    cameraHolder.add(cameraVR);
    scene.add( cameraHolder );
    
@@ -29,7 +30,7 @@ export function setVRMode(renderer, scene)
    return cameraVR;
 }
 
-export function moveVR(speed)
+export function moveVR(speed, camera = null)
 {
 	if(moveCamera)
 	{
