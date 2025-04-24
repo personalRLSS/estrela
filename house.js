@@ -32,6 +32,7 @@ renderer.setPixelRatio( window.devicePixelRatio );
 renderer.setSize( window.innerWidth, window.innerHeight );
 renderer.xr.enabled = true;
 renderer.shadowMap.enabled = true;
+renderer.localClippingEnabled = true;
 
 let flyMode = false;
 
@@ -71,6 +72,10 @@ const manager = new THREE.LoadingManager( () => {
      element.remove();  
    });  
  });
+
+ // Clipping plane
+let localPlane = new THREE.Plane( new THREE.Vector3( 0, - 1, 0 ), 0.75 );
+
 
 //-- Create VR button and settings ---------------------------------------------------------------
 
@@ -126,6 +131,7 @@ function loadOBJFile(modelPath, modelName, visibility, desiredScale)
             if( child.material ) 
             {
                child.material.side = THREE.DoubleSide; 
+               child.material.clippingPlanes = [ localPlane ];
             }
          });
 
@@ -171,6 +177,8 @@ function buildInterface()
    {
       this.speed = flyCamera.movementSpeed;      
       this.flyMode = false;
+      this.clippingPlane = true;
+      this.planePosition = localPlane.constant;
 
       this.onFlyMode = function(){
          flyMode = this.flyMode;
@@ -182,6 +190,12 @@ function buildInterface()
       this.onUpdateSpeed = function(){
          flyCamera.movementSpeed = this.speed;
        };      
+       this.enableClippingPlane = function(){
+         renderer.localClippingEnabled = !renderer.localClippingEnabled 
+       };
+       this.ChangePlanePos = function(){
+         localPlane.constant = this.planePosition;
+       };        
    }; 
 
    var gui = new GUI();
@@ -190,7 +204,14 @@ function buildInterface()
       .name("Fly Mode"); 
    gui.add(controls, 'speed', 0.01, 1.0)
       .name("Fly Speed")
-      .onChange(function(e) { controls.onUpdateSpeed() });       
+      .onChange(function(e) { controls.onUpdateSpeed() }); 
+      
+   gui.add(controls, 'clippingPlane', true)
+      .onChange(function() { controls.enableClippingPlane() })
+      .name("Clipping Plane"); 
+   gui.add(controls, 'planePosition', 0.01, 1.0)
+      .name("Plane")
+      .onChange(function(e) { controls.ChangePlanePos() });             
 }
 
 //-- Main loop -----------------------------------------------------------------------------------
