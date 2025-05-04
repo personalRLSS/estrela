@@ -18,7 +18,7 @@ import { setVRMode,
 //-- MUDAR AQUI, PRINCIPALMENTE O layout ----------------------------------
 
 var path = './exportObj/';
-var layout = 'layout4';
+var layout = 'layout5';
 
 //-------------------------------------------------------------------------
 
