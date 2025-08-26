@@ -74,7 +74,7 @@ const manager = new THREE.LoadingManager( () => {
  });
 
  // Clipping plane
-let localPlane = new THREE.Plane( new THREE.Vector3( 0, - 1, 0 ), 0.75 );
+let localPlane = new THREE.Plane( new THREE.Vector3( 0, - 1, 0 ), 1 );
 
 
 //-- Create VR button and settings ---------------------------------------------------------------
